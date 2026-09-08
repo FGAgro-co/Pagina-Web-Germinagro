@@ -116,8 +116,9 @@ export default function App() {
       <nav className="fixed top-0 left-0 right-0 z-50 bg-[#0c3016]/94 backdrop-blur-md">
         <div className="max-w-6xl mx-auto px-5 h-14 flex items-center justify-between">
           <a href="#">
-            <div className="bg-[#f5f0e4] rounded-lg px-1.5 py-1 shadow shadow-black/20">
-              <img src={logoGerminagro} alt="Fundación Germinagro" className="h-8 w-auto block" />
+            <div className="flex items-center gap-2 text-white">
+              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#8dc56a] text-lg">🌱</span>
+              <span className="font-semibold tracking-wide">GERMINAGRO</span>
             </div>
           </a>
           <div className="hidden md:flex items-center gap-6 text-sm text-white/75">
@@ -143,8 +144,8 @@ export default function App() {
 
       {/* ──────── HERO ──────── */}
       <section className="relative min-h-screen flex items-end pb-0 pt-14 overflow-hidden">
-        {/* Foto de fondo a sangre */}
-        <img src={fondoReunion} alt="" aria-hidden className="absolute inset-0 w-full h-full object-cover object-center" />
+        {/* Foto de campo a sangre */}
+        <img src={trabajoCampo} alt="Equipo Germinagro trabajando en campo" className="absolute inset-0 w-full h-full object-cover object-center" />
         {/* Gradiente dramático */}
         <div className="absolute inset-0" style={{
           background: "linear-gradient(to bottom, rgba(10,28,12,0.55) 0%, rgba(10,28,12,0.25) 40%, rgba(10,28,12,0.90) 80%, #0c3016 100%)"
@@ -158,19 +159,12 @@ export default function App() {
           <div className="mt-2 text-center text-white/60 text-xs">📍 Supía, Caldas</div>
         </div>
 
-        {/* Foto flotante semillas — superior izquierda */}
-        <div className="absolute top-28 left-6 hidden lg:block" style={{ transform: "rotate(-1.5deg)" }}>
-          <div className="w-32 rounded-xl overflow-hidden shadow-xl border-3 border-white/15 opacity-80">
-            <img src={imgSemillas} alt="Semillas nativas" className="w-full h-36 object-cover" />
-          </div>
-        </div>
-
         {/* Contenido */}
         <div className="relative w-full max-w-6xl mx-auto px-6 pb-16">
           <div className="max-w-2xl">
             <div className="inline-flex items-center gap-2 bg-[#5a9e3a]/25 border border-[#5a9e3a]/40 text-[#a8d880] text-xs font-semibold uppercase tracking-widest px-4 py-1.5 rounded-full mb-5">
               <span className="w-1.5 h-1.5 rounded-full bg-[#8dc56a] animate-pulse" />
-              Caldas, Colombia · Entidad sin ánimo de lucro
+              Manizales, Caldas · Eje Cafetero · Tolima · Valle del Cauca
             </div>
             <h1 style={{ fontFamily: "Fredoka One, var(--font-display)", lineHeight: 1.1 }}
               className="text-6xl md:text-7xl font-bold text-white mb-5">
@@ -179,7 +173,7 @@ export default function App() {
               cosechando<br />bienestar.
             </h1>
             <p className="text-white/70 text-lg leading-relaxed mb-8 max-w-lg">
-              Impulsamos el desarrollo rural integral en Colombia articulando asistencia técnica agropecuaria y fortalecimiento comunitario.
+              Impulsamos el desarrollo rural integral desde Manizales hacia el Eje Cafetero, Tolima y Valle del Cauca, articulando asistencia técnica agropecuaria y fortalecimiento comunitario.
             </p>
             <div className="flex flex-wrap gap-3">
               <a href="#servicios" className="bg-[#5a9e3a] hover:bg-[#3a7a28] text-white font-semibold px-6 py-3 rounded-full transition-all shadow-lg shadow-[#5a9e3a]/30 hover:shadow-[#5a9e3a]/50">
@@ -211,7 +205,7 @@ export default function App() {
       </section>
 
       {/* ──────── NOSOTROS ──────── */}
-      <section id="nosotros" style={{ background: "#0c3016" }}>
+      <section id="nosotros" style={{ background: "linear-gradient(135deg, #0c3016 0%, #174c26 55%, #2e6b3b 100%)" }}>
         <div className="max-w-6xl mx-auto px-6 py-20 grid md:grid-cols-2 gap-12 items-center">
           {/* Foto con decoración */}
           <div className="relative">
@@ -245,7 +239,7 @@ export default function App() {
               La <strong className="text-white">Fundación Germinagro</strong> es una entidad sin ánimo de lucro constituida para impulsar el desarrollo rural integral en Colombia, articulando asistencia técnica agropecuaria y fortalecimiento comunitario.
             </p>
             <p className="text-white/60 leading-relaxed mb-8 text-sm">
-              Nuestro origen responde a una necesidad real: los pequeños y medianos productores de Caldas enfrentan simultáneamente barreras técnicas, organizativas y normativas que ninguna intervención sectorial aislada logra resolver por completo.
+              Nuestro origen responde a una necesidad real: los pequeños y medianos productores de Manizales, Caldas y otros territorios del Eje Cafetero, Tolima y Valle del Cauca enfrentan simultáneamente barreras técnicas, organizativas y normativas que ninguna intervención sectorial aislada logra resolver por completo.
             </p>
 
             <div className="grid grid-cols-2 gap-3 mb-6">
@@ -378,7 +372,7 @@ export default function App() {
       </section>
 
       {/* ──────── EN CAMPO — franja de fotos ──────── */}
-      <section id="campo" className="py-20" style={{ background: "#0c3016" }}>
+      <section id="campo" className="py-20" style={{ background: "linear-gradient(135deg, #0c3016 0%, #194d29 60%, #477b3b 100%)" }}>
         <div className="max-w-6xl mx-auto px-6">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
             <div>
@@ -389,7 +383,7 @@ export default function App() {
               </h2>
             </div>
             <p className="text-white/55 text-sm max-w-xs leading-relaxed">
-              Ferias agroecológicas, custodia de semillas nativas y construcción de infraestructura rural en Caldas y municipios vecinos.
+              Ferias agroecológicas, custodia de semillas nativas y construcción de infraestructura rural en Manizales, el Eje Cafetero, Tolima y Valle del Cauca.
             </p>
           </div>
 
@@ -465,7 +459,7 @@ export default function App() {
       </section>
 
       {/* ──────── VINCULACIÓN ──────── */}
-      <section id="vinculacion" className="py-20" style={{ background: "#0c3016" }}>
+      <section id="vinculacion" className="py-20" style={{ background: "linear-gradient(145deg, #0c3016 0%, #174c26 48%, #7a4e2d 150%)" }}>
         <div className="max-w-6xl mx-auto px-6">
           <div className="flex flex-col md:flex-row md:items-end gap-6 mb-12">
             <div className="flex-1">
@@ -512,7 +506,7 @@ export default function App() {
                     Una fundación, múltiples aliados,
                     <span className="italic text-[#8dc56a]"> un solo propósito.</span>
                   </div>
-                  <div className="text-white/60 text-sm italic">Sembrando oportunidades, Cosechando bienestar — Caldas, Colombia</div>
+                  <div className="text-white/60 text-sm italic">Sembrando oportunidades, Cosechando bienestar — Manizales, Caldas y regiones vecinas</div>
                 </div>
               </div>
             </div>
