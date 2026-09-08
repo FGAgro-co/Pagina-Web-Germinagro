@@ -1,0 +1,10 @@
+{
+  "description": "Create a professional landing page for your foundation to effectively showcase your mission, engage visitors, and drive support.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
