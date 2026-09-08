@@ -81,6 +81,13 @@
 *.woff2              filter=lfs diff=lfs merge=lfs -text
 *.eot                filter=lfs diff=lfs merge=lfs -text
 
+# Keep this site's small assets as regular Git files so deployment platforms
+# can fetch them without requiring Git LFS.
+src/imports/*.png     -filter -diff -merge -text
+src/imports/*.jpg     -filter -diff -merge -text
+src/imports/*.jpeg    -filter -diff -merge -text
+src/imports/*.pdf     -filter -diff -merge -text
+
 # ---------------------------------------------------------------------------
 # Data & Machine Learning
 # ---------------------------------------------------------------------------
