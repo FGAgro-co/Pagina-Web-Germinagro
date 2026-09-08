@@ -543,7 +543,10 @@ export default function App() {
               <div className="space-y-4">
                 {[
                   { icon: "📍", label: "Ubicación", val: "Caldas, Colombia" },
-                  { icon: "📧", label: "Correo", val: "germinagro@gmail.com" },
+                  { icon: "📧", label: "Correo", val: "fundaciongerminagro@gmail.com", href: "mailto:fundaciongerminagro@gmail.com" },
+                  { icon: "📞", label: "Teléfono 1", val: "300 716 9188", href: "tel:+573007169188" },
+                  { icon: "📞", label: "Teléfono 2", val: "321 749 2254", href: "tel:+573217492254" },
+                  { icon: "📞", label: "Teléfono 3", val: "300 487 3916", href: "tel:+573004873916" },
                   { icon: "📱", label: "Redes", val: "@germinagro" },
                 ].map((c) => (
                   <div key={c.label} className="flex items-center gap-3">
@@ -552,7 +555,13 @@ export default function App() {
                     </div>
                     <div>
                       <div className="text-[#888] text-xs uppercase tracking-wider">{c.label}</div>
-                      <div className="text-[#0c3016] font-semibold text-sm">{c.val}</div>
+                      {c.href ? (
+                        <a href={c.href} className="text-[#0c3016] font-semibold text-sm hover:text-[#5a9e3a] transition-colors">
+                          {c.val}
+                        </a>
+                      ) : (
+                        <div className="text-[#0c3016] font-semibold text-sm">{c.val}</div>
+                      )}
                     </div>
                   </div>
                 ))}
@@ -583,7 +592,7 @@ export default function App() {
               </div>
               <div className="mb-4">
                 <label className="text-[#888] text-xs uppercase tracking-wider block mb-1">Correo electrónico</label>
-                <input type="email" placeholder="correo@ejemplo.com"
+                <input type="email" placeholder="fundaciongerminagro@gmail.com"
                   className="w-full bg-[#f7f4ee] border border-[#ddd] rounded-xl px-4 py-3 text-[#333] placeholder-[#aaa] text-sm focus:outline-none focus:border-[#5a9e3a] focus:ring-1 focus:ring-[#5a9e3a]/30 transition-all" />
               </div>
               <div className="mb-4">
