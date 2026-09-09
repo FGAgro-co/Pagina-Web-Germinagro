@@ -476,7 +476,7 @@ export default function App() {
               { icon: UsersRound, title: "Equipo interdisciplinario", desc: "Técnicos especializados para cada área de intervención.", photo: productoresAnserma },
               { icon: BarChart3, title: "Ejecución trazable", desc: "Recursos públicos y privados con la trazabilidad que exigen los co-financiadores.", photo: equipoProcesos },
               { icon: MapPinned, title: "Conocimiento local", desc: "Dominio de ICA, ADR, Agrosavia, CMDR y normativa nacional.", photo: trabajoCampoNuevo },
-              { icon: Search, title: "Diagnóstico In Situ", desc: "Ningún programa se diseña desde escritorio.", photo: viveroPlantula },
+              { icon: Search, title: "Diagnóstico In Situ", desc: "Ningún programa se diseña desde escritorio.", photo: productoresAnserma },
             ].map((v, i) => (
               <div key={i} className="relative rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all hover:-translate-y-1 group" style={{ minHeight: 200 }}>
                 <img src={v.photo} alt="" aria-hidden className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
