@@ -8,6 +8,12 @@ import imgSemillas from "./imports/image-2.png";
 import imgMaiz from "./imports/image-3.png";
 import imgBolsas from "./imports/image-4.png";
 import imgStand from "./imports/image-5.png";
+import cultivoPlatano from "./imports/cultivo-platano.jpeg";
+import cultivoPlatanoCosecha from "./imports/cultivo-platano-cosecha.jpeg";
+import equipoProcesos from "./imports/equipo-procesos.jpeg";
+import productoresAnserma from "./imports/productores-anserma.jpeg";
+import trabajoCampoNuevo from "./imports/trabajo-campo-nuevo.jpeg";
+import viveroPlantula from "./imports/vivero-plantula-3.jpeg";
 
 const LINES = [
   {
@@ -145,7 +151,7 @@ export default function App() {
       {/* ──────── HERO ──────── */}
       <section className="relative min-h-screen flex items-end pb-0 pt-14 overflow-hidden">
         {/* Foto de campo a sangre */}
-        <img src={trabajoCampo} alt="Equipo Germinagro trabajando en campo" className="absolute inset-0 w-full h-full object-cover object-center" />
+        <img src={productoresAnserma} alt="Productores y equipo técnico en Anserma, Caldas" className="absolute inset-0 w-full h-full object-cover object-center" />
         {/* Gradiente dramático */}
         <div className="absolute inset-0" style={{
           background: "linear-gradient(to bottom, rgba(10,28,12,0.55) 0%, rgba(10,28,12,0.25) 40%, rgba(10,28,12,0.90) 80%, #0c3016 100%)"
@@ -192,6 +198,8 @@ export default function App() {
               { src: imgFeria, label: "Productos nativos" },
               { src: imgMaiz, label: "Maíz criollo" },
               { src: imgBolsas, label: "Germoplasma" },
+              { src: cultivoPlatano, label: "Cultivo de plátano" },
+              { src: viveroPlantula, label: "Viveros" },
             ].map((p) => (
               <div key={p.label} className="flex-shrink-0 relative rounded-xl overflow-hidden shadow-lg" style={{ width: 120, height: 80 }}>
                 <img src={p.src} alt={p.label} className="w-full h-full object-cover" />
@@ -391,36 +399,36 @@ export default function App() {
           <div className="grid grid-cols-12 grid-rows-2 gap-3" style={{ height: 380 }}>
             {/* Grande izquierda */}
             <div className="col-span-5 row-span-2 rounded-3xl overflow-hidden relative group">
-              <img src={imgEquipo} alt="Equipo Germinagro en campo abierto" className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105" />
+              <img src={productoresAnserma} alt="Productores y equipo técnico en Anserma, Caldas" className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
               <div className="absolute bottom-4 left-4">
                 <div className="text-white font-bold text-sm">Equipo en campo</div>
-                <div className="text-white/60 text-xs">Supía, Caldas</div>
+                <div className="text-white/60 text-xs">Anserma, Caldas</div>
               </div>
             </div>
             {/* Arriba centro */}
             <div className="col-span-4 rounded-2xl overflow-hidden relative group">
-              <img src={imgFeria} alt="Productos nativos en feria agroecológica" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+              <img src={cultivoPlatanoCosecha} alt="Cosecha de plátano en finca" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-              <div className="absolute bottom-3 left-3 text-white text-xs font-semibold">Productos nativos</div>
+              <div className="absolute bottom-3 left-3 text-white text-xs font-semibold">Cosecha de plátano</div>
             </div>
             {/* Arriba derecha */}
             <div className="col-span-3 rounded-2xl overflow-hidden relative group">
-              <img src={imgMaiz} alt="Maíz criollo morado y rojo" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+              <img src={equipoProcesos} alt="Equipo Germinagro desarrollando procesos agropecuarios" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-              <div className="absolute bottom-3 left-3 text-white text-xs font-semibold">Maíz criollo</div>
+              <div className="absolute bottom-3 left-3 text-white text-xs font-semibold">Trabajo técnico</div>
             </div>
             {/* Abajo centro */}
             <div className="col-span-3 rounded-2xl overflow-hidden relative group">
-              <img src={imgSemillas} alt="Semillas nativas y recomendaciones" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+              <img src={viveroPlantula} alt="Plántulas en vivero de Germinagro" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-              <div className="absolute bottom-3 left-3 text-white text-xs font-semibold">Semillas nativas</div>
+              <div className="absolute bottom-3 left-3 text-white text-xs font-semibold">Viveros</div>
             </div>
             {/* Abajo derecha grande */}
             <div className="col-span-4 rounded-2xl overflow-hidden relative group">
-              <img src={imgBolsas} alt="Germoplasma Germinagro con materiales de diagnóstico" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+              <img src={trabajoCampoNuevo} alt="Trabajo de campo para infraestructura rural" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/55 to-transparent" />
-              <div className="absolute bottom-3 left-3 text-white text-xs font-semibold">Germoplasma Germinagro</div>
+              <div className="absolute bottom-3 left-3 text-white text-xs font-semibold">Infraestructura rural</div>
             </div>
           </div>
         </div>
