@@ -1,4 +1,28 @@
 import { useState } from "react";
+import {
+  ArrowRight,
+  BarChart3,
+  BookOpen,
+  Building2,
+  Check,
+  ClipboardCheck,
+  Droplets,
+  Globe2,
+  Handshake,
+  HeartHandshake,
+  Landmark,
+  Leaf,
+  Link2,
+  MapPinned,
+  Mail,
+  Microscope,
+  Search,
+  MapPin,
+  Phone,
+  Sprout,
+  UsersRound,
+  Wheat,
+} from "lucide-react";
 import logoGerminagro from "./imports/LOGO_GERMINAGRO.jpg";
 import fondoReunion from "./imports/FONDO_REUNI_N__1_.jpeg";
 import trabajoCampo from "./imports/WhatsApp_Image_2026-07-08_at_14.06.50__2_.jpeg";
@@ -18,10 +42,10 @@ import viveroPlantula from "./imports/vivero-plantula-3.jpeg";
 const LINES = [
   {
     num: "01",
-    emoji: "🌿",
+    icon: Sprout,
     title: "Innovación agroecológica",
     color: "#2e7d40",
-    photo: imgSemillas,
+    photo: viveroPlantula,
     photoAlt: "Semillas nativas biodiversas en bolsas de distribución Germinagro",
     objetivo: "Reducir la dependencia de insumos de síntesis química mediante tecnologías agroecológicas y producción local de insumos biológicos.",
     publico: "Productores en todas sus escalas y formas asociativas.",
@@ -36,10 +60,10 @@ const LINES = [
   },
   {
     num: "02",
-    emoji: "🤝",
+    icon: Handshake,
     title: "Asociatividad y agronegocios",
     color: "#7a4e2d",
-    photo: imgFeria,
+    photo: cultivoPlatano,
     photoAlt: "Mesa con productos nativos y bioinsumos Germinagro en feria agroecológica",
     objetivo: "Fortalecer estructuras asociativas sólidas que permitan a los productores negociar en condiciones equitativas y acceder a mercados formales.",
     publico: "Asociaciones, cooperativas, juntas de acción comunal y gremios productivos.",
@@ -53,10 +77,10 @@ const LINES = [
   },
   {
     num: "03",
-    emoji: "📋",
+    icon: ClipboardCheck,
     title: "Certificaciones y mercados",
     color: "#1a5c28",
-    photo: imgBolsas,
+    photo: cultivoPlatanoCosecha,
     photoAlt: "Bolsas de germoplasma con material de Fundación Germinagro y formularios de diagnóstico",
     objetivo: "Preparar a productores y asociaciones para cumplir estándares técnico-legales que exige la exportación.",
     publico: "Actores agropecuarios orientados a la producción formal, empacadoras y entes territoriales.",
@@ -68,10 +92,10 @@ const LINES = [
   },
   {
     num: "04",
-    emoji: "📚",
+    icon: BookOpen,
     title: "Formación y transferencia",
     color: "#5a9e3a",
-    photo: imgEquipo,
+    photo: equipoProcesos,
     photoAlt: "Equipo Germinagro trabajando en campo en Supía Caldas con herramientas y bambú",
     objetivo: "Instalar capacidades técnicas duraderas en las comunidades rurales más allá del ciclo de financiación.",
     publico: "Productores, líderes comunitarios, jóvenes rurales y funcionarios territoriales.",
@@ -83,10 +107,10 @@ const LINES = [
   },
   {
     num: "05",
-    emoji: "🌍",
+    icon: Globe2,
     title: "Gestión ambiental tropical",
     color: "#4a7c2e",
-    photo: imgMaiz,
+    photo: trabajoCampoNuevo,
     photoAlt: "Mazorcas nativas de maíz morado y rojo — custodia de semillas criollas del trópico",
     objetivo: "Identificar y mitigar riesgos ambientales en agroecosistemas, impulsando la transición a modelos sostenibles adaptados al trópico.",
     publico: "Productores de todas las escalas, comunidades étnicas y organizaciones ambientales.",
@@ -101,12 +125,12 @@ const LINES = [
 ];
 
 const VINCULACION = [
-  { emoji: "🌾", title: "Productor o asociación", color: "#2e7d40", cta: "Pedir acompañamiento", desc: "Asistencia técnica, certificaciones y acceso a mercados directamente en su finca o asociación." },
-  { emoji: "🏛️", title: "Entidad pública", color: "#0f3a19", cta: "Explorar alianza", desc: "Operación técnica con trazabilidad para alcaldías, gobernaciones, ADR y Agrosavia." },
-  { emoji: "🌐", title: "Cooperación internacional", color: "#7a4e2d", cta: "Proponer proyecto", desc: "Implementación territorial con enfoque diferencial alineada a los ODS." },
-  { emoji: "🏢", title: "Empresa privada", color: "#1a5c28", cta: "Conectar", desc: "Cadenas de abastecimiento sostenibles con proveedores rurales certificados." },
-  { emoji: "🔬", title: "Investigadores", color: "#5a9e3a", cta: "Colaborar", desc: "Acceso a fincas y comunidades para validación de tecnologías agroecológicas." },
-  { emoji: "💚", title: "Voluntario o donante", color: "#8dc56a", cta: "Apoyar", desc: "Voluntariado técnico, donación dirigida o apadrinamiento de familias productoras." },
+  { icon: Wheat, title: "Productor o asociación", color: "#2e7d40", cta: "Pedir acompañamiento", desc: "Asistencia técnica, certificaciones y acceso a mercados directamente en su finca o asociación." },
+  { icon: Landmark, title: "Entidad pública", color: "#0f3a19", cta: "Explorar alianza", desc: "Operación técnica con trazabilidad para alcaldías, gobernaciones, ADR y Agrosavia." },
+  { icon: Globe2, title: "Cooperación internacional", color: "#7a4e2d", cta: "Proponer proyecto", desc: "Implementación territorial con enfoque diferencial alineada a los ODS." },
+  { icon: Building2, title: "Empresa privada", color: "#1a5c28", cta: "Conectar", desc: "Cadenas de abastecimiento sostenibles con proveedores rurales certificados." },
+  { icon: Microscope, title: "Investigadores", color: "#5a9e3a", cta: "Colaborar", desc: "Acceso a fincas y comunidades para validación de tecnologías agroecológicas." },
+  { icon: HeartHandshake, title: "Voluntario o donante", color: "#8dc56a", cta: "Apoyar", desc: "Voluntariado técnico, donación dirigida o apadrinamiento de familias productoras." },
 ];
 
 export default function App() {
@@ -213,7 +237,8 @@ export default function App() {
       </section>
 
       {/* ──────── NOSOTROS ──────── */}
-      <section id="nosotros" style={{ background: "linear-gradient(135deg, #0c3016 0%, #174c26 55%, #2e6b3b 100%)" }}>
+      <section id="nosotros" className="relative overflow-hidden" style={{ background: "linear-gradient(135deg, #0c3016 0%, #174c26 55%, #2e6b3b 100%)" }}>
+        <div className="pointer-events-none absolute inset-0 opacity-20" style={{ backgroundImage: `url(${trabajoCampoNuevo})`, backgroundPosition: "center", backgroundSize: "cover", mixBlendMode: "soft-light" }} />
         <div className="max-w-6xl mx-auto px-6 py-20 grid md:grid-cols-2 gap-12 items-center">
           {/* Foto con decoración */}
           <div className="relative">
@@ -222,7 +247,7 @@ export default function App() {
               <div className="absolute inset-0 bg-gradient-to-t from-[#0c3016]/80 via-transparent to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-5">
                 <div className="flex items-start gap-3 bg-[#7a4e2d] rounded-2xl px-4 py-3 shadow-xl">
-                  <span className="text-xl mt-0.5">🤝</span>
+                  <Handshake size={20} strokeWidth={1.8} className="mt-0.5 flex-shrink-0 text-[#f0d5b8]" />
                   <div>
                     <div className="text-[#f0d5b8] text-xs font-semibold uppercase tracking-wider">Enfoque diferencial</div>
                     <div className="text-white text-sm font-medium leading-snug">Articulamos con comunidades indígenas, afrodescendientes y campesinas.</div>
@@ -252,11 +277,11 @@ export default function App() {
 
             <div className="grid grid-cols-2 gap-3 mb-6">
               <div className="rounded-2xl p-4" style={{ background: "rgba(90,158,58,0.15)", border: "1px solid rgba(90,158,58,0.3)" }}>
-                <div className="text-[#8dc56a] text-xs font-bold uppercase tracking-wide mb-1">🌱 Misión</div>
+                <div className="flex items-center gap-2 text-[#8dc56a] text-xs font-bold uppercase tracking-wide mb-1"><Sprout size={14} /> Misión</div>
                 <div className="text-white/75 text-sm leading-snug">Conectar actores, oportunidades y recursos para el desarrollo agropecuario sostenible en la Colombia rural.</div>
               </div>
               <div className="rounded-2xl p-4" style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.12)" }}>
-                <div className="text-[#a8d880] text-xs font-bold uppercase tracking-wide mb-1">🔭 Visión</div>
+                <div className="flex items-center gap-2 text-[#a8d880] text-xs font-bold uppercase tracking-wide mb-1"><MapPinned size={14} /> Visión</div>
                 <div className="text-white/75 text-sm leading-snug">Ser la fundación líder que facilita la sostenibilidad agropecuaria y el bienestar integral de los territorios rurales.</div>
               </div>
             </div>
@@ -264,12 +289,12 @@ export default function App() {
             {/* Pilares compactos */}
             <div className="flex gap-2 flex-wrap">
               {[
-                { icon: "🌱", label: "Suelos vivos" },
-                { icon: "💧", label: "Agua protegida" },
-                { icon: "🌿", label: "Biodiversidad" },
+                { icon: Leaf, label: "Suelos vivos" },
+                { icon: Droplets, label: "Agua protegida" },
+                { icon: Sprout, label: "Biodiversidad" },
               ].map((p) => (
                 <div key={p.label} className="flex items-center gap-1.5 bg-white/10 border border-white/15 rounded-full px-3 py-1.5 text-sm text-white/80">
-                  <span>{p.icon}</span> {p.label}
+                  <p.icon size={15} strokeWidth={1.8} /> {p.label}
                 </div>
               ))}
             </div>
@@ -278,7 +303,7 @@ export default function App() {
       </section>
 
       {/* ──────── SERVICIOS — TABS ──────── */}
-      <section id="servicios" className="py-0" style={{ background: "#f7f4ee" }}>
+      <section id="servicios" className="relative overflow-hidden py-0" style={{ background: "linear-gradient(115deg, #f7f4ee 0%, #eef3e8 50%, #f4e9dc 100%)" }}>
         {/* Cabecera */}
         <div className="max-w-6xl mx-auto px-6 pt-20 pb-8">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
@@ -307,7 +332,7 @@ export default function App() {
                   border: activeTab === i ? `2px solid ${l.color}` : "2px solid #d4d4c8",
                 }}
               >
-                <span>{l.emoji}</span>
+                <l.icon size={17} strokeWidth={1.8} />
                 <span className="hidden sm:inline">{l.title}</span>
                 <span className="sm:hidden">{l.num}</span>
               </button>
@@ -330,7 +355,7 @@ export default function App() {
               <div className="absolute top-4 left-4">
                 <div className="flex items-center gap-2 text-white px-3 py-1.5 rounded-full text-xs font-bold shadow"
                   style={{ background: line.color }}>
-                  <span>{line.emoji}</span> Línea {line.num}
+                  <line.icon size={15} strokeWidth={1.8} /> Línea {line.num}
                 </div>
               </div>
               {/* Cita visual */}
@@ -352,8 +377,8 @@ export default function App() {
                 <ul className="space-y-2">
                   {line.items.map((item) => (
                     <li key={item} className="flex items-start gap-2 text-sm text-[#333]">
-                      <span className="mt-0.5 flex-shrink-0 w-4 h-4 rounded-full flex items-center justify-center text-white text-[10px] font-bold"
-                        style={{ background: line.color }}>✓</span>
+                      <span className="mt-0.5 flex-shrink-0 w-4 h-4 rounded-full flex items-center justify-center text-white"
+                        style={{ background: line.color }}><Check size={10} strokeWidth={3} /></span>
                       {item}
                     </li>
                   ))}
@@ -362,7 +387,7 @@ export default function App() {
               <a href="#contacto"
                 className="mt-6 inline-flex items-center gap-2 text-white text-sm font-semibold px-5 py-2.5 rounded-full transition-all self-start shadow hover:shadow-lg"
                 style={{ background: line.color }}>
-                Solicitar esta línea →
+                Solicitar esta línea <ArrowRight size={16} />
               </a>
             </div>
           </div>
@@ -380,7 +405,8 @@ export default function App() {
       </section>
 
       {/* ──────── EN CAMPO — franja de fotos ──────── */}
-      <section id="campo" className="py-20" style={{ background: "linear-gradient(135deg, #0c3016 0%, #194d29 60%, #477b3b 100%)" }}>
+      <section id="campo" className="relative overflow-hidden py-20" style={{ background: "linear-gradient(135deg, #0c3016 0%, #194d29 60%, #477b3b 100%)" }}>
+        <div className="pointer-events-none absolute inset-0 opacity-15" style={{ backgroundImage: `url(${cultivoPlatanoCosecha})`, backgroundPosition: "center", backgroundSize: "cover", mixBlendMode: "screen" }} />
         <div className="max-w-6xl mx-auto px-6">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
             <div>
@@ -435,7 +461,7 @@ export default function App() {
       </section>
 
       {/* ──────── PROPUESTA DE VALOR — strip diagonal ──────── */}
-      <section style={{ background: "linear-gradient(170deg, #f7f4ee 0%, #eaf0e2 100%)" }} className="py-20">
+      <section style={{ background: "linear-gradient(170deg, #f7f4ee 0%, #eaf0e2 52%, #f1dfcc 100%)" }} className="py-20">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-12">
             <div className="text-[#5a9e3a] text-xs font-semibold uppercase tracking-widest mb-2">Propuesta de valor</div>
@@ -446,17 +472,17 @@ export default function App() {
           {/* 5 tarjetas horizontales con foto de fondo sutil */}
           <div className="grid md:grid-cols-5 gap-4">
             {[
-              { icon: "🔗", title: "Enfoque integral", desc: "Asistencia técnica, gestión asociativa y sostenibilidad en un solo aliado.", photo: imgStand },
-              { icon: "👥", title: "Equipo inter­disciplinario", desc: "Técnicos especializados para cada área de intervención.", photo: imgEquipo },
-              { icon: "📊", title: "Ejecución trazable", desc: "Recursos públicos y privados con la trazabilidad que exigen los co-financiadores.", photo: imgBolsas },
-              { icon: "🗺️", title: "Conocimiento local", desc: "Dominio de ICA, ADR, Agrosavia, CMDR y normativa nacional.", photo: imgFeria },
-              { icon: "🔍", title: "Diagnóstico In Situ", desc: "Ningún programa se diseña desde escritorio.", photo: imgSemillas },
+              { icon: Link2, title: "Enfoque integral", desc: "Asistencia técnica, gestión asociativa y sostenibilidad en un solo aliado.", photo: cultivoPlatano },
+              { icon: UsersRound, title: "Equipo interdisciplinario", desc: "Técnicos especializados para cada área de intervención.", photo: productoresAnserma },
+              { icon: BarChart3, title: "Ejecución trazable", desc: "Recursos públicos y privados con la trazabilidad que exigen los co-financiadores.", photo: equipoProcesos },
+              { icon: MapPinned, title: "Conocimiento local", desc: "Dominio de ICA, ADR, Agrosavia, CMDR y normativa nacional.", photo: trabajoCampoNuevo },
+              { icon: Search, title: "Diagnóstico In Situ", desc: "Ningún programa se diseña desde escritorio.", photo: viveroPlantula },
             ].map((v, i) => (
               <div key={i} className="relative rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all hover:-translate-y-1 group" style={{ minHeight: 200 }}>
                 <img src={v.photo} alt="" aria-hidden className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0c3016]/90 via-[#0c3016]/50 to-[#0c3016]/20" />
                 <div className="relative p-4 flex flex-col justify-end h-full" style={{ minHeight: 200 }}>
-                  <div className="text-2xl mb-2">{v.icon}</div>
+                  <div className="mb-3 flex h-9 w-9 items-center justify-center rounded-full border border-white/30 bg-white/10 text-[#c5e6a5]"><v.icon size={18} strokeWidth={1.8} /></div>
                   <div className="text-[#8dc56a] font-bold text-sm mb-1" style={{ fontFamily: "var(--font-display)" }}>{v.title}</div>
                   <div className="text-white/70 text-xs leading-relaxed">{v.desc}</div>
                 </div>
@@ -467,7 +493,8 @@ export default function App() {
       </section>
 
       {/* ──────── VINCULACIÓN ──────── */}
-      <section id="vinculacion" className="py-20" style={{ background: "linear-gradient(145deg, #0c3016 0%, #174c26 48%, #7a4e2d 150%)" }}>
+      <section id="vinculacion" className="relative overflow-hidden py-20" style={{ background: "linear-gradient(145deg, #0c3016 0%, #174c26 48%, #7a4e2d 150%)" }}>
+        <div className="pointer-events-none absolute inset-0 opacity-15" style={{ backgroundImage: `url(${viveroPlantula})`, backgroundPosition: "center", backgroundSize: "cover", mixBlendMode: "screen" }} />
         <div className="max-w-6xl mx-auto px-6">
           <div className="flex flex-col md:flex-row md:items-end gap-6 mb-12">
             <div className="flex-1">
@@ -489,12 +516,12 @@ export default function App() {
                 className="group relative rounded-2xl p-5 border border-white/10 hover:border-white/30 transition-all hover:-translate-y-1 cursor-pointer"
                 style={{ background: "rgba(255,255,255,0.05)" }}
               >
-                <div className="text-3xl mb-3">{v.emoji}</div>
+                <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-[#c5e6a5]"><v.icon size={21} strokeWidth={1.8} /></div>
                 <div className="text-white font-bold text-sm mb-1.5" style={{ fontFamily: "var(--font-display)" }}>{v.title}</div>
                 <div className="text-white/55 text-xs leading-relaxed mb-4">{v.desc}</div>
                 <div className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full transition-all"
                   style={{ background: v.color, color: "#fff" }}>
-                  {v.cta} →
+                  {v.cta} <ArrowRight size={14} />
                 </div>
               </a>
             ))}
@@ -544,16 +571,16 @@ export default function App() {
               </p>
               <div className="space-y-4">
                 {[
-                  { icon: "📍", label: "Ubicación", val: "Caldas, Colombia" },
-                  { icon: "📧", label: "Correo", val: "fundaciongerminagro@gmail.com", href: "mailto:fundaciongerminagro@gmail.com" },
-                  { icon: "📞", label: "Teléfono 1", val: "300 716 9188", href: "tel:+573007169188" },
-                  { icon: "📞", label: "Teléfono 2", val: "321 749 2254", href: "tel:+573217492254" },
-                  { icon: "📞", label: "Teléfono 3", val: "300 487 3916", href: "tel:+573004873916" },
-                  { icon: "📱", label: "Redes", val: "@germinagro" },
+                  { icon: MapPin, label: "Ubicación", val: "Manizales, Caldas" },
+                  { icon: Mail, label: "Correo", val: "fundaciongerminagro@gmail.com", href: "mailto:fundaciongerminagro@gmail.com" },
+                  { icon: Phone, label: "Teléfono 1", val: "300 716 9188", href: "tel:+573007169188" },
+                  { icon: Phone, label: "Teléfono 2", val: "321 749 2254", href: "tel:+573217492254" },
+                  { icon: Phone, label: "Teléfono 3", val: "300 487 3916", href: "tel:+573004873916" },
+                  { icon: Link2, label: "Redes", val: "@germinagro" },
                 ].map((c) => (
                   <div key={c.label} className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-full bg-[#d4e8c2] flex items-center justify-center text-lg flex-shrink-0">
-                      {c.icon}
+                      <c.icon size={18} strokeWidth={1.8} />
                     </div>
                     <div>
                       <div className="text-[#888] text-xs uppercase tracking-wider">{c.label}</div>
