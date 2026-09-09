@@ -1,8 +1,8 @@
 {
   "title": "Germinagro",
-  "description": "Create a professional landing page for your foundation to effectively showcase your mission, engage visitors, and drive support.",
+  "description": "Fundación Germinagro: desarrollo rural, asistencia técnica agropecuaria y fortalecimiento comunitario desde Manizales para el Eje Cafetero, Tolima y Valle del Cauca.",
   "robots": {
-    "index": false
+    "index": true
   },
   "accessibility": {
     "addBypassLinks": false,

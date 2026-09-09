@@ -667,7 +667,7 @@ export default function App() {
             </div>
           </div>
           <div className="text-white/30 text-xs text-center">
-            © 2026 Fundación Germinagro · Caldas, Colombia · Entidad sin ánimo de lucro
+            © 2026 Fundación Germinagro · Manizales, Caldas · Eje Cafetero, Tolima y Valle del Cauca
           </div>
         </div>
       </footer>
