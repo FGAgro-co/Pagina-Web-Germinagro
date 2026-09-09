@@ -146,9 +146,11 @@ export default function App() {
       <nav className="fixed top-0 left-0 right-0 z-50 bg-[#0c3016]/94 backdrop-blur-md">
         <div className="max-w-6xl mx-auto px-5 h-14 flex items-center justify-between">
           <a href="#">
-            <div className="flex items-center gap-2 text-white">
-              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#8dc56a] text-lg">🌱</span>
-              <span className="font-semibold tracking-wide">GERMINAGRO</span>
+            <div className="flex items-center gap-2">
+              <div className="flex h-9 items-center rounded-md bg-[#f5f0e4] px-1.5 shadow shadow-black/20">
+                <img src={logoGerminagro} alt="Fundación Germinagro" className="h-7 w-auto object-contain" />
+              </div>
+              <span className="hidden text-xs font-semibold tracking-[0.18em] text-white/80 sm:inline">FUNDACIÓN</span>
             </div>
           </a>
           <div className="hidden md:flex items-center gap-6 text-sm text-white/75">
