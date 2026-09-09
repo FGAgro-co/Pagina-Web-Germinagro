@@ -147,10 +147,13 @@ export default function App() {
         <div className="max-w-6xl mx-auto px-5 h-14 flex items-center justify-between">
           <a href="#">
             <div className="flex items-center gap-2">
-              <div className="flex h-9 items-center rounded-md bg-[#f5f0e4] px-1.5 shadow shadow-black/20">
-                <img src={logoGerminagro} alt="Fundación Germinagro" className="h-7 w-auto object-contain" />
+              <div className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-md bg-[#f5f0e4] shadow shadow-black/20">
+                <img src={logoGerminagro} alt="Fundación Germinagro" className="h-11 w-11 max-w-none object-cover" />
               </div>
-              <span className="hidden text-xs font-semibold tracking-[0.18em] text-white/80 sm:inline">FUNDACIÓN</span>
+              <div className="hidden leading-none sm:block">
+                <span className="block text-sm font-bold tracking-[0.12em] text-white">GERMINAGRO</span>
+                <span className="mt-1 block text-[9px] font-semibold tracking-[0.24em] text-[#a8d880]">FUNDACIÓN</span>
+              </div>
             </div>
           </a>
           <div className="hidden md:flex items-center gap-6 text-sm text-white/75">
