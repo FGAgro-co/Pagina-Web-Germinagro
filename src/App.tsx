@@ -375,13 +375,18 @@ function AdminPanel() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [analytics, setAnalytics] = useState(EMPTY_ANALYTICS);
-  const [users, setUsers] = useState(readUsers);
+  const [people, setPeople] = useState<{ id: string; full_name: string; profile: string; created_at: string }[]>([]);
   const [config, setConfig] = useState(readSiteConfig);
   const [tab, setTab] = useState("resumen");
   const [notice, setNotice] = useState("");
   const [registering, setRegistering] = useState(false);
   const [newUser, setNewUser] = useState({ name: "", email: "", password: "" });
   const [loginAttempts, setLoginAttempts] = useState(0);
+
+  async function loadPeople(authClient: NonNullable<typeof supabase>) {
+    const { data } = await authClient.from("profiles").select("id, full_name, profile, created_at").order("created_at", { ascending: false });
+    if (data) setPeople(data);
+  }
 
   useEffect(() => {
     purgeLegacySensitiveStorage();
@@ -390,11 +395,15 @@ function AdminPanel() {
     window.addEventListener("storage", refresh);
     if (supabase) {
       const authClient = supabase;
-      void authClient.auth.getSession().then(({ data }) => {
+      void authClient.auth.getSession().then(async ({ data }) => {
         if (!data.session) {
           sessionStorage.removeItem(ADMIN_SESSION_KEY);
           setAuthenticated(false);
+          return;
         }
+        const { data: adminRole } = await authClient.from("admin_roles").select("user_id").eq("user_id", data.session.user.id).maybeSingle();
+        if (!adminRole) { sessionStorage.removeItem(ADMIN_SESSION_KEY); setAuthenticated(false); return; }
+        await loadPeople(authClient);
       });
     }
     return () => window.removeEventListener("storage", refresh);
@@ -409,6 +418,7 @@ function AdminPanel() {
         if (authError) { setLoginAttempts((value) => value + 1); setError("Credenciales no válidas."); return; }
         const { data: adminRole } = await authClient.from("admin_roles").select("user_id").eq("user_id", data.user.id).maybeSingle();
         if (!adminRole) { await authClient.auth.signOut({ scope: "local" }); setError("Esta cuenta no tiene permisos de administración."); return; }
+        await loadPeople(authClient);
         sessionStorage.setItem(ADMIN_SESSION_KEY, "true"); setAuthenticated(true); setError(""); setAnalytics(readAnalytics());
       });
       return;
@@ -517,7 +527,7 @@ function AdminPanel() {
             <label className="block text-xs font-semibold text-[#555] mb-1">Contraseña</label><input required minLength={6} type="password" value={newUser.password} onChange={(event) => setNewUser({ ...newUser, password: event.target.value })} className="w-full mb-5 bg-[#f7f4ee] border border-[#ddd] rounded-lg px-3 py-2.5 text-sm" />
             <button disabled={registering} className="inline-flex items-center gap-2 bg-[#1a5c28] text-white rounded-lg px-4 py-2.5 text-sm font-semibold disabled:opacity-50"><UserPlus size={16} />{registering ? "Registrando..." : "Registrar usuario"}</button>
           </form>
-          <div className="bg-white rounded-2xl border border-black/5 p-6"><h2 className="text-xl font-bold text-[#0c3016] mb-4">Usuarios registrados</h2>{users.length === 0 ? <p className="text-sm text-[#888]">Aún no hay usuarios adicionales.</p> : <div className="space-y-3">{users.map((user) => <div key={user.email} className="flex items-center gap-3 border-b border-black/5 pb-3"><div className="w-9 h-9 rounded-full bg-[#d4e8c2] flex items-center justify-center text-[#1a5c28]"><Users size={17} /></div><div><p className="font-semibold text-sm">{user.name}</p><p className="text-xs text-[#888]">{user.email}</p></div></div>)}</div>}</div>
+          <div className="bg-white rounded-2xl border border-black/5 p-6"><h2 className="text-xl font-bold text-[#0c3016] mb-4">Personas registradas</h2>{people.length === 0 ? <p className="text-sm text-[#888]">Aún no hay perfiles confirmados.</p> : <div className="space-y-3">{people.map((person) => <div key={person.id} className="flex items-center gap-3 border-b border-black/5 pb-3"><div className="w-9 h-9 rounded-full bg-[#d4e8c2] flex items-center justify-center text-[#1a5c28]"><Users size={17} /></div><div><p className="font-semibold text-sm">{person.full_name}</p><p className="text-xs text-[#888]">{person.profile} · {new Date(person.created_at).toLocaleDateString("es-CO")}</p></div></div>)}</div>}</div>
         </section>}
         {tab === "apariencia" && <SiteEditor config={config} setConfig={setConfig} saveConfig={saveConfig} />}
         {tab === "conexion" && <section className="bg-white rounded-2xl border border-black/5 p-6 max-w-3xl"><h2 className="text-xl font-bold text-[#0c3016] mb-2">Conexión con Supabase</h2><div className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-sm font-semibold ${isSupabaseConfigured ? "bg-[#d4e8c2] text-[#1a5c28]" : "bg-[#f0d5b8] text-[#7a4e2d]"}`}><span className="w-2 h-2 rounded-full bg-current" />{isSupabaseConfigured ? "Conectado" : "Modo local"}</div><p className="text-sm text-[#666] mt-5 leading-relaxed">El formulario de contactos y Supabase Auth usan la conexión segura cuando está configurada. Las métricas de este prototipo se muestran localmente; para analítica multiusuario en producción se recomienda una Edge Function o RPC con límites y rate limiting, nunca una escritura anónima directa sobre agregados.</p></section>}
