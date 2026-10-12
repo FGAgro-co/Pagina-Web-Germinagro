@@ -52,12 +52,35 @@ body {
 
 .hero-atmosphere {
   isolation: isolate;
-  background: linear-gradient(125deg, rgba(46, 125, 64, 0.05), rgba(212, 232, 194, 0.08), rgba(122, 78, 45, 0.06));
-  background-size: 220% 220%;
+  background-image:
+    radial-gradient(34rem circle at var(--pointer-x, 50%) var(--pointer-y, 45%), rgba(181, 224, 133, 0.22), transparent 72%),
+    linear-gradient(125deg, rgba(46, 125, 64, 0.05), rgba(212, 232, 194, 0.08), rgba(122, 78, 45, 0.06));
+  background-size: auto, 220% 220%;
   animation: hero-atmosphere-shift 24s ease-in-out infinite alternate;
   mix-blend-mode: screen;
   opacity: 0.7;
   pointer-events: none;
+}
+
+.experience-backdrop {
+  background:
+    radial-gradient(ellipse at 12% 8%, rgba(212, 232, 194, 0.72), transparent 42%),
+    radial-gradient(ellipse at 92% 82%, rgba(240, 213, 184, 0.42), transparent 38%);
+  background-size: 150% 150%;
+  animation: experience-backdrop-drift 20s ease-in-out infinite alternate;
+}
+
+.experience-image::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background: linear-gradient(115deg, transparent 25%, rgba(255, 255, 255, 0.12) 48%, transparent 72%);
+  translate: -100% 0;
+  transition: translate 0.8s ease;
+}
+
+.experience-card:hover .experience-image::after {
+  translate: 100% 0;
 }
 
 .hero-orb {
@@ -102,6 +125,11 @@ body {
   box-shadow: 0 18px 36px rgba(12, 48, 22, 0.2);
 }
 
+.experience-card.interactive-card:hover {
+  translate: 0 -8px;
+  box-shadow: 0 12px 30px rgba(12, 48, 22, 0.12);
+}
+
 @keyframes hero-photo-drift {
   from { transform: scale(1.03); }
   to { transform: scale(1.1); }
@@ -113,8 +141,8 @@ body {
 }
 
 @keyframes hero-atmosphere-shift {
-  from { background-position: 0% 50%; }
-  to { background-position: 100% 50%; }
+  from { background-position: center, 0% 50%; }
+  to { background-position: center, 100% 50%; }
 }
 
 @keyframes hero-orb-drift {
@@ -122,14 +150,24 @@ body {
   100% { transform: translate3d(8%, 7%, 0) scale(1.08); opacity: 0.42; }
 }
 
+@keyframes experience-backdrop-drift {
+  from { background-position: 0% 0%, 100% 100%; }
+  to { background-position: 14% 10%, 84% 90%; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .hero-photo,
   .hero-title,
   .hero-atmosphere,
   .hero-orb,
+  .experience-backdrop,
   .interactive-card {
     animation: none;
     transition: none;
+  }
+
+  .experience-image::after {
+    display: none;
   }
 
   .interactive-card:hover {

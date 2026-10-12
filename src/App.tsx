@@ -19,7 +19,6 @@ import {
   Palette,
   RefreshCw,
   Save,
-  ShieldCheck,
   Smartphone,
   UserPlus,
   Users,
@@ -43,15 +42,20 @@ import imgSemillas from "./imports/image-2.png";
 import imgMaiz from "./imports/image-3.png";
 import imgBolsas from "./imports/image-4.png";
 import imgStand from "./imports/image-5.png";
-import cultivoPlatano from "./imports/cultivo-platano.jpeg";
 import cultivoPlatanoCosecha from "./imports/cultivo-platano-cosecha.jpeg";
 import equipoProcesos from "./imports/equipo-procesos.jpeg";
 import productoresAnserma from "./imports/productores-anserma.jpeg";
-import trabajoCampoNuevo from "./imports/trabajo-campo-nuevo.jpeg";
 import viveroPlantula from "./imports/vivero-plantula-3.jpeg";
-import jornadaCampo1 from "./imports/jornada-campo-1.jpg";
-import jornadaCampo2 from "./imports/jornada-campo-2.jpg";
-import jornadaCampo3 from "./imports/jornada-campo-3.jpg";
+import comunidadTerritorio from "./imports/comunidad-territorio.jpg";
+import bioinsumosComunidad from "./imports/bioinsumos-comunidad.jpg";
+import encuentroTerritorial from "./imports/encuentro-territorial.jpg";
+import reunionProductores from "./imports/reunion-productores.jpg";
+import diagnosticoCultivoPlatano from "./imports/diagnostico-cultivo-platano.jpg";
+import viveroComunitario from "./imports/vivero-comunitario.jpg";
+import monitoreoAgroecologico from "./imports/monitoreo-agroecologico.jpg";
+import poscosechaPlatano from "./imports/poscosecha-platano.jpg";
+import biofabricaTanques from "./imports/biofabrica-tanques.jpg";
+import preparacionBioinsumos from "./imports/preparacion-bioinsumos.jpg";
 
 declare global {
   interface Window {
@@ -73,8 +77,8 @@ const LINES = [
     icon: Sprout,
     title: "Innovación agroecológica",
     color: "#2e7d40",
-    photo: viveroPlantula,
-    photoAlt: "Semillas nativas biodiversas en bolsas de distribución Germinagro",
+    photo: monitoreoAgroecologico,
+    photoAlt: "Insecto observado durante el monitoreo agroecológico de un cultivo",
     objetivo: "Reducir la dependencia de insumos de síntesis química mediante tecnologías agroecológicas y producción local de insumos biológicos.",
     publico: "Productores en todas sus escalas y formas asociativas.",
     items: [
@@ -91,8 +95,8 @@ const LINES = [
     icon: Handshake,
     title: "Asociatividad y agronegocios",
     color: "#7a4e2d",
-    photo: cultivoPlatano,
-    photoAlt: "Mesa con productos nativos y bioinsumos Germinagro en feria agroecológica",
+    photo: cultivoPlatanoCosecha,
+    photoAlt: "Cosecha de plátano en una unidad productiva rural",
     objetivo: "Fortalecer estructuras asociativas sólidas que permitan a los productores negociar en condiciones equitativas y acceder a mercados formales.",
     publico: "Asociaciones, cooperativas, juntas de acción comunal y gremios productivos.",
     items: [
@@ -108,8 +112,8 @@ const LINES = [
     icon: ClipboardCheck,
     title: "Certificaciones y mercados",
     color: "#1a5c28",
-    photo: cultivoPlatanoCosecha,
-    photoAlt: "Bolsas de germoplasma con material de Fundación Germinagro y formularios de diagnóstico",
+    photo: imgBolsas,
+    photoAlt: "Material de germoplasma preparado para propagación",
     objetivo: "Preparar a productores y asociaciones para cumplir estándares técnico-legales que exige la exportación.",
     publico: "Actores agropecuarios orientados a la producción formal, empacadoras y entes territoriales.",
     items: [
@@ -138,8 +142,8 @@ const LINES = [
     icon: Globe2,
     title: "Gestión ambiental tropical",
     color: "#4a7c2e",
-    photo: trabajoCampoNuevo,
-    photoAlt: "Mazorcas nativas de maíz morado y rojo — custodia de semillas criollas del trópico",
+    photo: imgFeria,
+    photoAlt: "Productores y productos agroecológicos en una feria rural",
     objetivo: "Identificar y mitigar riesgos ambientales en agroecosistemas, impulsando la transición a modelos sostenibles adaptados al trópico.",
     publico: "Productores de todas las escalas, comunidades étnicas y organizaciones ambientales.",
     items: [
@@ -231,9 +235,9 @@ const DEFAULT_SITE_CONFIG: SiteConfig = {
   footerTagline: "Sembrando oportunidades, Cosechando bienestar",
   heroImage: "productores",
   floatingImage: "equipo",
-  fieldImage: "procesos",
-  galleryImage: "vivero",
-  contactImage: "feria",
+  fieldImage: "feria",
+  galleryImage: "semillas",
+  contactImage: "maiz",
   accentColor: "#5a9e3a",
   darkColor: "#0c3016",
 };
@@ -248,10 +252,15 @@ const SITE_IMAGES = {
   productores: { label: "Productores en campo", src: productoresAnserma },
   equipo: { label: "Equipo Germinagro", src: imgEquipo },
   feria: { label: "Feria agroecológica", src: imgStand },
+  semillas: { label: "Semillas nativas", src: imgSemillas },
+  maiz: { label: "Maíz criollo", src: imgMaiz },
   vivero: { label: "Vivero y plántulas", src: viveroPlantula },
   procesos: { label: "Procesos de campo", src: equipoProcesos },
   reunion: { label: "Reunión de aliados", src: fondoReunion },
 } as const;
+
+const IMAGE_CONFIG_KEYS = ["heroImage", "floatingImage", "fieldImage", "galleryImage", "contactImage"] as const;
+const IMAGE_CONFIG_OPTIONS = ["productores", "equipo", "feria", "semillas", "maiz"] as const;
 
 function readAnalytics(): Analytics {
   try {
@@ -269,7 +278,17 @@ function updateAnalytics(change: Partial<Analytics>) {
 
 function readSiteConfig(): SiteConfig {
   try {
-    return { ...DEFAULT_SITE_CONFIG, ...JSON.parse(localStorage.getItem(SITE_CONFIG_KEY) || "{}") };
+    const config = { ...DEFAULT_SITE_CONFIG, ...JSON.parse(localStorage.getItem(SITE_CONFIG_KEY) || "{}") };
+    const usedImages = new Set<string>();
+    for (const key of IMAGE_CONFIG_KEYS) {
+      const selected = IMAGE_CONFIG_OPTIONS.some((image) => image === config[key]) && !usedImages.has(config[key])
+        ? config[key]
+        : IMAGE_CONFIG_OPTIONS.find((image) => !usedImages.has(image));
+      if (!selected) throw new Error("No hay suficientes imágenes distintas para la configuración del sitio.");
+      config[key] = selected;
+      usedImages.add(selected);
+    }
+    return config;
   } catch {
     return DEFAULT_SITE_CONFIG;
   }
@@ -347,43 +366,44 @@ function SiteEditor({ config, setConfig, saveConfig }: { config: SiteConfig; set
       <section className="rounded-2xl border border-black/5 bg-white p-6"><h3 className="mb-4 font-bold text-[#0c3016]">Identidad y navegación</h3><div className="grid gap-4 md:grid-cols-2">{field("brandName", "Nombre de marca")}{field("navContact", "Botón de contacto")}{field("navAbout", "Enlace Nosotros")}{field("navServices", "Enlace Servicios")}{field("navField", "Enlace En campo")}{field("navPartners", "Enlace Vinculación")}</div></section>
       <section className="rounded-2xl border border-black/5 bg-white p-6"><h3 className="mb-4 font-bold text-[#0c3016]">Hero principal</h3><div className="space-y-4">{field("heroEyebrow", "Texto superior")}{field("heroTitle", "Título principal", true)}{field("heroSubtitle", "Descripción", true)}<div className="grid gap-4 md:grid-cols-2">{field("heroPrimaryCta", "Botón principal")}{field("heroSecondaryCta", "Botón secundario")}</div></div></section>
       <section className="rounded-2xl border border-black/5 bg-white p-6"><h3 className="mb-4 font-bold text-[#0c3016]">Contacto y pie de página</h3><div className="space-y-4">{field("contactTitle", "Título de contacto")}{field("contactSubtitle", "Descripción de contacto", true)}{field("footerTagline", "Frase del pie de página", true)}</div></section>
-      <section className="rounded-2xl border border-black/5 bg-white p-6"><h3 className="mb-4 font-bold text-[#0c3016]">Imágenes y paleta</h3><div className="grid gap-4 md:grid-cols-2">{([["heroImage", "Imagen principal"], ["floatingImage", "Foto flotante"], ["fieldImage", "Imagen de campo"], ["galleryImage", "Imagen del collage"], ["contactImage", "Imagen de contacto"]] as [keyof SiteConfig, string][]).map(([key, label]) => <label key={key} className="block"><span className="mb-1 block text-xs font-semibold text-[#555]">{label}</span><select value={config[key]} onChange={(event) => update(key, event.target.value)} className="w-full rounded-lg border border-[#ddd] bg-[#f7f4ee] px-3 py-2.5 text-sm">{Object.entries(SITE_IMAGES).map(([imageKey, image]) => <option key={imageKey} value={imageKey}>{image.label}</option>)}</select></label>)}<label className="flex items-center gap-2 text-sm"><input type="color" value={config.accentColor} onChange={(event) => update("accentColor", event.target.value)} /> Color de acento</label><label className="flex items-center gap-2 text-sm"><input type="color" value={config.darkColor} onChange={(event) => update("darkColor", event.target.value)} /> Color oscuro</label></div><div className="mt-5 grid gap-4 md:grid-cols-3"><img src={SITE_IMAGES[config.heroImage as keyof typeof SITE_IMAGES]?.src || SITE_IMAGES.productores.src} alt="Vista previa hero" className="h-32 w-full rounded-xl object-cover" /><img src={SITE_IMAGES[config.fieldImage as keyof typeof SITE_IMAGES]?.src || SITE_IMAGES.procesos.src} alt="Vista previa campo" className="h-32 w-full rounded-xl object-cover" /><img src={SITE_IMAGES[config.contactImage as keyof typeof SITE_IMAGES]?.src || SITE_IMAGES.feria.src} alt="Vista previa contacto" className="h-32 w-full rounded-xl object-cover" /></div></section>
+      <section className="rounded-2xl border border-black/5 bg-white p-6"><h3 className="mb-4 font-bold text-[#0c3016]">Imágenes y paleta</h3><div className="grid gap-4 md:grid-cols-2">{([["heroImage", "Imagen principal"], ["floatingImage", "Foto flotante"], ["fieldImage", "Imagen de campo"], ["galleryImage", "Imagen del collage"], ["contactImage", "Imagen de contacto"]] as [keyof SiteConfig, string][]).map(([key, label]) => <label key={key} className="block"><span className="mb-1 block text-xs font-semibold text-[#555]">{label}</span><select value={config[key]} onChange={(event) => update(key, event.target.value)} className="w-full rounded-lg border border-[#ddd] bg-[#f7f4ee] px-3 py-2.5 text-sm">{IMAGE_CONFIG_OPTIONS.filter((imageKey) => config[key] === imageKey || !IMAGE_CONFIG_KEYS.some((otherKey) => otherKey !== key && config[otherKey] === imageKey)).map((imageKey) => <option key={imageKey} value={imageKey}>{SITE_IMAGES[imageKey].label}</option>)}</select></label>)}<label className="flex items-center gap-2 text-sm"><input type="color" value={config.accentColor} onChange={(event) => update("accentColor", event.target.value)} /> Color de acento</label><label className="flex items-center gap-2 text-sm"><input type="color" value={config.darkColor} onChange={(event) => update("darkColor", event.target.value)} /> Color oscuro</label></div><div className="mt-5 grid gap-4 md:grid-cols-3"><img src={SITE_IMAGES[config.heroImage as keyof typeof SITE_IMAGES]?.src || SITE_IMAGES.productores.src} alt="Vista previa hero" className="h-32 w-full rounded-xl object-cover" /><img src={SITE_IMAGES[config.fieldImage as keyof typeof SITE_IMAGES]?.src || SITE_IMAGES.procesos.src} alt="Vista previa campo" className="h-32 w-full rounded-xl object-cover" /><img src={SITE_IMAGES[config.contactImage as keyof typeof SITE_IMAGES]?.src || SITE_IMAGES.feria.src} alt="Vista previa contacto" className="h-32 w-full rounded-xl object-cover" /></div></section>
       <button className="inline-flex items-center gap-2 rounded-lg bg-[#1a5c28] px-5 py-3 text-sm font-semibold text-white"><Save size={16} /> Publicar cambios</button>
     </form>
   );
 }
 
-function LegalPage({ type }: { type: "seguridad" | "privacidad" | "terminos" }) {
-  const content = type === "seguridad" ? {
-    eyebrow: "Centro de confianza",
-    title: "Seguridad de la plataforma",
-    sections: [
-      ["Autenticación protegida", "Las cuentas utilizan Supabase Auth. Las contraseñas no se guardan en localStorage ni se envían a la base de datos de la aplicación; Supabase las procesa con su sistema de autenticación y hash seguro. La sesión se cierra localmente y existe bloqueo tras intentos fallidos repetidos."],
-      ["Protección de datos", "Las tablas usan Row Level Security (RLS). Los contactos solo se pueden crear desde el formulario público y la lectura, configuración y administración requieren una sesión autenticada. Nunca se incluye una service_role key en el navegador."],
-      ["Entrada y base de datos", "Los formularios aplican tipos, límites y validación HTML. Las consultas usan el cliente parametrizado de Supabase, no concatenan SQL y por tanto reducen el riesgo de inyección SQL. La validación definitiva debe mantenerse también en Postgres y en un endpoint de servidor."],
-      ["Operación segura", "Configura HTTPS, confirma el dominio en Supabase, activa confirmación de correo, CAPTCHA y SMTP propio para producción. Revisa periódicamente sesiones, políticas RLS, dependencias y registros de acceso."],
-    ],
-  } : type === "privacidad" ? {
-    eyebrow: "Información legal",
-    title: "Política de privacidad",
-    sections: [
-      ["Responsable y marco aplicable", "Fundación Germinagro, con operación en Manizales, Caldas. Esta política se formula teniendo en cuenta la Ley 1581 de 2012, el Decreto 1377 de 2013 y las orientaciones de la Superintendencia de Industria y Comercio de Colombia. Para consultas sobre datos personales puedes usar fundaciongerminagro@gmail.com."],
-      ["Datos que recopilamos", "Podemos recibir nombre, correo, organización, perfil, mensaje y datos técnicos agregados de navegación. No solicitamos datos sensibles para el registro general."],
-      ["Finalidad y conservación", "Usamos la información para responder solicitudes, gestionar comunicaciones autorizadas, mejorar el sitio y generar estadísticas agregadas. Conservamos los datos solo durante el tiempo necesario para esas finalidades o para cumplir obligaciones legales."],
-      ["Derechos y reclamos", "Puedes solicitar acceso, corrección, actualización, eliminación o retiro de autorización escribiendo al correo indicado. También puedes presentar consultas o reclamos sobre el tratamiento de tus datos. No vendemos información personal ni la usamos para fines incompatibles con esta política."],
-    ],
-  } : {
-    eyebrow: "Condiciones de uso",
-    title: "Términos del sitio",
-    sections: [
-      ["Uso permitido", "El sitio ofrece información institucional y canales de contacto de Germinagro. El usuario se compromete a entregar información veraz y a no intentar acceder a áreas administrativas o alterar el servicio."],
-      ["Contenido", "Los textos, imágenes, marca y materiales del sitio pertenecen a sus respectivos titulares. Su uso fuera de los fines autorizados requiere permiso previo."],
-      ["Comunicaciones", "Al registrarte o enviar un formulario aceptas que podamos responder a tu solicitud y enviarte comunicaciones relacionadas con la actividad de la fundación. Puedes retirar esa autorización en cualquier momento."],
-      ["Actualizaciones", "Podemos actualizar estos términos y esta política cuando cambien el servicio, la normativa o nuestras prácticas. La versión vigente se publicará en esta sección."],
-    ],
-  };
-
-  return <main className="min-h-screen bg-[#f7f4ee] text-[#1a1a1a]"><header className="bg-[#0c3016] px-6 py-10 text-white"><div className="mx-auto max-w-4xl"><a href="/" className="text-sm text-[#c5e6a5] hover:underline">← Volver a Germinagro</a><p className="mt-8 text-xs font-bold uppercase tracking-[0.2em] text-[#8dc56a]">{content.eyebrow}</p><h1 className="mt-2 text-4xl font-bold" style={{ fontFamily: "var(--font-display)" }}>{content.title}</h1></div></header><div className="mx-auto max-w-4xl px-6 py-10"><div className="mb-8 flex items-center gap-3 rounded-2xl border border-[#b9d69d] bg-[#eaf3e0] p-5 text-sm text-[#1a5c28]"><ShieldCheck size={24} /><span>Protección activa: autenticación, RLS y validación de entradas.</span></div><div className="space-y-5">{content.sections.map(([heading, body]) => <section key={heading} className="rounded-2xl border border-black/5 bg-white p-6"><h2 className="text-lg font-bold text-[#0c3016]">{heading}</h2><p className="mt-2 leading-relaxed text-[#555]">{body}</p></section>)}</div><p className="mt-8 text-xs text-[#888]">Última actualización: 23 de septiembre de 2026.</p></div></main>;
+function LegalPage() {
+  return (
+    <main className="min-h-screen bg-[#f7f4ee] text-[#333]">
+      <header className="border-b border-black/5 bg-white">
+        <div className="mx-auto flex max-w-4xl items-center justify-between px-6 py-5">
+          <span className="text-sm font-semibold text-[#0c3016]">Fundación Germinagro</span>
+          <a href="/" className="text-xs text-[#66705f] transition-colors hover:text-[#1a5c28]">Volver al sitio</a>
+        </div>
+      </header>
+      <article className="mx-auto max-w-3xl px-6 py-12">
+        <p className="text-xs font-semibold uppercase tracking-widest text-[#73816b]">Información</p>
+        <h1 className="mt-2 text-3xl font-semibold text-[#173a20]" style={{ fontFamily: "var(--font-display)" }}>Política de privacidad</h1>
+        <p className="mt-2 text-xs text-[#888]">Actualizada el 11 de octubre de 2026</p>
+        <div className="mt-8 space-y-6 text-sm leading-7 text-[#555]">
+          <p>La Fundación Germinagro, con sede de operación en Manizales, Caldas, cuida la información personal que recibimos a través de este sitio. Tratamos los datos conforme a la normativa colombiana de protección de datos personales, incluida la Ley 1581 de 2012.</p>
+          <section>
+            <h2 className="font-semibold text-[#233d28]">Qué información usamos y para qué</h2>
+            <p className="mt-1">Si nos contactas, podemos usar tu nombre, correo electrónico, organización, perfil y mensaje para responderte y dar seguimiento a tu solicitud. También podemos usar datos generales de navegación para conocer el uso del sitio y mejorarlo. No solicitamos datos sensibles para estas consultas.</p>
+          </section>
+          <section>
+            <h2 className="font-semibold text-[#233d28]">Conservación y protección</h2>
+            <p className="mt-1">Conservamos la información solo durante el tiempo necesario para atender la solicitud o cumplir obligaciones legales. Aplicamos controles de acceso y medidas razonables de protección. No vendemos tus datos personales.</p>
+          </section>
+          <section>
+            <h2 className="font-semibold text-[#233d28]">Tus derechos y cómo contactarnos</h2>
+            <p className="mt-1">Puedes solicitar acceso, actualización, corrección o eliminación de tus datos, o retirar tu autorización cuando corresponda. Para hacerlo, escribe a <a className="text-[#356b40] underline underline-offset-2" href="mailto:fundaciongerminagro@gmail.com">fundaciongerminagro@gmail.com</a>. También puedes usar ese correo para resolver dudas sobre esta política.</p>
+          </section>
+          <p>El sitio ofrece información institucional y canales de contacto. Al usarlo, te pedimos entregar información veraz y respetar el contenido publicado. Esta política puede actualizarse si cambian nuestras prácticas o la normativa aplicable.</p>
+        </div>
+      </article>
+    </main>
+  );
 }
 
 function AdminPanel() {
@@ -574,7 +594,7 @@ export default function App() {
 
   useEffect(() => {
     window.AOS?.init({
-      duration: 650,
+      duration: 1000,
       easing: "ease-out-cubic",
       once: true,
       offset: 70,
@@ -603,9 +623,7 @@ export default function App() {
   }, []);
 
   if (window.location.pathname.startsWith("/admin")) return <AdminPanel />;
-  if (window.location.pathname === "/seguridad") return <LegalPage type="seguridad" />;
-  if (window.location.pathname === "/privacidad") return <LegalPage type="privacidad" />;
-  if (window.location.pathname === "/terminos") return <LegalPage type="terminos" />;
+  if (["/seguridad", "/privacidad", "/terminos"].includes(window.location.pathname)) return <LegalPage />;
 
   const line = LINES[activeTab];
 
@@ -682,9 +700,21 @@ export default function App() {
       </nav>
 
       {/* ──────── HERO ──────── */}
-      <section className="relative min-h-screen flex items-end pb-0 pt-14 overflow-hidden">
+      <section
+        className="relative min-h-screen flex items-end pb-0 pt-14 overflow-hidden"
+        onPointerMove={(event) => {
+          if (event.pointerType !== "mouse") return;
+          const bounds = event.currentTarget.getBoundingClientRect();
+          event.currentTarget.style.setProperty("--pointer-x", `${((event.clientX - bounds.left) / bounds.width) * 100}%`);
+          event.currentTarget.style.setProperty("--pointer-y", `${((event.clientY - bounds.top) / bounds.height) * 100}%`);
+        }}
+        onPointerLeave={(event) => {
+          event.currentTarget.style.setProperty("--pointer-x", "50%");
+          event.currentTarget.style.setProperty("--pointer-y", "45%");
+        }}
+      >
         {/* Foto de campo a sangre */}
-        <img src={SITE_IMAGES[siteConfig.heroImage as keyof typeof SITE_IMAGES]?.src || productoresAnserma} alt="Productores y equipo técnico en Anserma, Caldas" className="hero-photo absolute inset-0 w-full h-full object-cover object-center" />
+        <img src={SITE_IMAGES[siteConfig.heroImage as keyof typeof SITE_IMAGES]?.src || productoresAnserma} alt={SITE_IMAGES[siteConfig.heroImage as keyof typeof SITE_IMAGES]?.label || "Productores y equipo técnico en campo"} className="hero-photo absolute inset-0 w-full h-full object-cover object-center" />
         {/* Gradiente dramático */}
         <div className="absolute inset-0" style={{
           background: "linear-gradient(to bottom, rgba(10,28,12,0.55) 0%, rgba(10,28,12,0.25) 40%, rgba(10,28,12,0.90) 80%, #0c3016 100%)"
@@ -732,30 +762,11 @@ export default function App() {
             </div>
           </div>
 
-          {/* Strip de fotos en la parte inferior del hero */}
-          <div className="flex gap-3 mt-12 overflow-x-auto pb-2" style={{ scrollbarWidth: "none" }}>
-            {[
-              { src: imgStand, label: "Ferias agroecológicas" },
-              { src: imgFeria, label: "Productos nativos" },
-              { src: imgMaiz, label: "Maíz criollo" },
-              { src: imgBolsas, label: "Germoplasma" },
-              { src: cultivoPlatano, label: "Cultivo de plátano" },
-              { src: viveroPlantula, label: "Viveros" },
-            ].map((p) => (
-              <div key={p.label} className="flex-shrink-0 relative rounded-xl overflow-hidden shadow-lg" style={{ width: 120, height: 80 }}>
-                <img src={p.src} alt={p.label} className="w-full h-full object-cover" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-2">
-                  <span className="text-white text-[10px] font-medium leading-tight">{p.label}</span>
-                </div>
-              </div>
-            ))}
-          </div>
         </div>
       </section>
 
       {/* ──────── NOSOTROS ──────── */}
       <section id="nosotros" className="relative overflow-hidden" style={{ background: "linear-gradient(135deg, #0c3016 0%, #174c26 55%, #2e6b3b 100%)" }}>
-        <div className="pointer-events-none absolute inset-0 opacity-20" style={{ backgroundImage: `url(${trabajoCampoNuevo})`, backgroundPosition: "center", backgroundSize: "cover", mixBlendMode: "soft-light" }} />
         <div className="max-w-6xl mx-auto px-6 py-20 grid md:grid-cols-2 gap-12 items-center">
           {/* Foto con decoración */}
           <div className="relative">
@@ -771,10 +782,6 @@ export default function App() {
                   </div>
                 </div>
               </div>
-            </div>
-            {/* Foto secundaria superpuesta */}
-            <div className="absolute -top-5 -right-5 w-32 rounded-2xl overflow-hidden shadow-xl border-4 border-[#0c3016] hidden md:block" style={{ transform: "rotate(3deg)" }}>
-              <img src={imgStand} alt="Stand Germinagro en feria" className="w-full h-36 object-cover" />
             </div>
           </div>
 
@@ -923,7 +930,6 @@ export default function App() {
 
       {/* ──────── EN CAMPO — franja de fotos ──────── */}
       <section id="campo" className="relative overflow-hidden py-20" style={{ background: "linear-gradient(135deg, #0c3016 0%, #194d29 60%, #477b3b 100%)" }}>
-        <div className="pointer-events-none absolute inset-0 opacity-15" style={{ backgroundImage: `url(${cultivoPlatanoCosecha})`, backgroundPosition: "center", backgroundSize: "cover", mixBlendMode: "screen" }} />
         <div className="max-w-6xl mx-auto px-6">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10" data-aos="fade-up">
             <div>
@@ -942,7 +948,7 @@ export default function App() {
           <div className="grid grid-cols-12 grid-rows-2 gap-3" style={{ height: 380 }}>
             {/* Grande izquierda */}
             <div className="col-span-5 row-span-2 rounded-3xl overflow-hidden relative group" data-aos="fade-up">
-              <img src={SITE_IMAGES[siteConfig.fieldImage as keyof typeof SITE_IMAGES]?.src || productoresAnserma} alt="Productores y equipo técnico en Anserma, Caldas" className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105" />
+              <img src={SITE_IMAGES[siteConfig.fieldImage as keyof typeof SITE_IMAGES]?.src || productoresAnserma} alt={SITE_IMAGES[siteConfig.fieldImage as keyof typeof SITE_IMAGES]?.label || "Trabajo en campo"} className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
               <div className="absolute bottom-4 left-4">
                 <div className="text-white font-bold text-sm">Equipo en campo</div>
@@ -951,28 +957,125 @@ export default function App() {
             </div>
             {/* Arriba centro */}
             <div className="col-span-4 rounded-2xl overflow-hidden relative group" data-aos="fade-up" data-aos-delay="80">
-              <img src={jornadaCampo1} alt="Equipo Germinagro durante una jornada de trabajo comunitario en el bosque" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+              <img src={encuentroTerritorial} alt="Encuentro de Germinagro con productores en una jornada comunitaria" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-              <div className="absolute bottom-3 left-3 text-white text-xs font-semibold">Jornada comunitaria</div>
+              <div className="absolute bottom-3 left-3 text-white text-xs font-semibold">Encuentro territorial</div>
             </div>
             {/* Arriba derecha */}
             <div className="col-span-3 rounded-2xl overflow-hidden relative group" data-aos="fade-up" data-aos-delay="160">
-              <img src={jornadaCampo2} alt="Equipo técnico construyendo una estructura rural de bambú" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+              <img src={comunidadTerritorio} alt="Intercambio de productos y saberes en una feria comunitaria" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-              <div className="absolute bottom-3 left-3 text-white text-xs font-semibold">Infraestructura rural</div>
+              <div className="absolute bottom-3 left-3 text-white text-xs font-semibold">Saberes locales</div>
             </div>
             {/* Abajo centro */}
             <div className="col-span-3 rounded-2xl overflow-hidden relative group" data-aos="fade-up" data-aos-delay="120">
-              <img src={SITE_IMAGES[siteConfig.galleryImage as keyof typeof SITE_IMAGES]?.src || viveroPlantula} alt="Plántulas en vivero de Germinagro" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+              <img src={SITE_IMAGES[siteConfig.galleryImage as keyof typeof SITE_IMAGES]?.src || equipoProcesos} alt={SITE_IMAGES[siteConfig.galleryImage as keyof typeof SITE_IMAGES]?.label || "Trabajo técnico agropecuario"} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-              <div className="absolute bottom-3 left-3 text-white text-xs font-semibold">Viveros</div>
+              <div className="absolute bottom-3 left-3 text-white text-xs font-semibold">Procesos agropecuarios</div>
             </div>
             {/* Abajo derecha grande */}
             <div className="col-span-4 rounded-2xl overflow-hidden relative group" data-aos="fade-up" data-aos-delay="200">
-              <img src={jornadaCampo3} alt="Productores y equipo técnico trabajando en una estructura de bambú" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+              <img src={reunionProductores} alt="Reunión de productores y equipo técnico para conversar sobre proyectos estratégicos" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/55 to-transparent" />
-              <div className="absolute bottom-3 left-3 text-white text-xs font-semibold">Aprendizaje en campo</div>
+              <div className="absolute bottom-3 left-3 text-white text-xs font-semibold">Planeación productiva</div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ──────── EXPERIENCIAS ──────── */}
+      <section id="experiencias" className="relative overflow-hidden bg-[#f9fbf9] py-20">
+        <div className="experience-backdrop pointer-events-none absolute inset-0" aria-hidden="true" />
+        <div className="mx-auto max-w-6xl px-6">
+          <div className="mb-12 text-center" data-aos="fade-up">
+            <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-[#5a9e3a]">Trabajo colaborativo en territorio</p>
+            <h2 className="text-3xl font-semibold text-[#173a20] md:text-4xl" style={{ fontFamily: "var(--font-display)" }}>
+              Experiencias
+            </h2>
+          </div>
+          <div className="mx-auto grid max-w-6xl gap-6 md:grid-cols-3">
+            {[
+              {
+                icon: Sprout,
+                images: [
+                  {
+                    src: viveroComunitario,
+                    alt: "Plántulas nativas creciendo bajo malla sombra en un vivero comunitario",
+                  },
+                ],
+                title: "Viveros comunitarios y especies endémicas",
+                description: "Acompañamos a comunidades indígenas en la construcción de viveros para fortalecer la propagación de especies endémicas y el reconocimiento de sus saberes ancestrales.",
+              },
+              {
+                icon: Leaf,
+                images: [
+                  {
+                    src: biofabricaTanques,
+                    alt: "Tanques de fermentación instalados para elaborar bioinsumos",
+                  },
+                  {
+                    src: preparacionBioinsumos,
+                    alt: "Preparación y pesaje de materiales para elaborar bioinsumos",
+                  },
+                  {
+                    src: bioinsumosComunidad,
+                    alt: "Jornada formativa comunitaria sobre producción y uso de bioinsumos",
+                  },
+                ],
+                title: "Producción de limón orgánico y biofábricas",
+                description: "Acompañamos a productores de limón orgánico y apoyamos la planeación de biofábricas para impulsar la producción local de bioinsumos.",
+              },
+              {
+                icon: Wheat,
+                images: [
+                  {
+                    src: diagnosticoCultivoPlatano,
+                    alt: "Cultivo de plátano en ladera como parte del diagnóstico de la unidad productiva",
+                  },
+                  {
+                    src: poscosechaPlatano,
+                    alt: "Racimos de plátano dispuestos en un espacio de manejo poscosecha",
+                  },
+                ],
+                title: "Plátano sostenible y diagnóstico agrícola",
+                description: "Acompañamos la producción sostenible de plátano y realizamos diagnósticos de las capacidades agrícolas para identificar oportunidades y fortalecer cada unidad productiva.",
+              },
+            ].map((experience, index) => (
+              <article
+                key={experience.title}
+                data-aos="fade-up"
+                data-aos-delay={index * 200}
+                className="experience-card interactive-card group relative overflow-hidden rounded-2xl border border-[#e7ece5] bg-white shadow-md"
+              >
+                <div className="experience-image relative h-56 overflow-hidden">
+                  <div className={`grid h-full ${experience.images.length === 1 ? "grid-cols-1" : "grid-cols-2"} ${experience.images.length === 3 ? "grid-rows-2" : ""} gap-1`}>
+                    {experience.images.map((image, imageIndex) => (
+                      <img
+                        key={image.src}
+                        src={image.src}
+                        alt={image.alt}
+                        className={`h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03] ${
+                          experience.images.length === 3 && imageIndex === 0 ? "row-span-2" : ""
+                        }`}
+                      />
+                    ))}
+                  </div>
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#102b18]/65 via-transparent to-transparent" />
+                  <span className="absolute bottom-4 left-4 rounded-full border border-white/30 bg-black/20 px-3 py-1 text-xs font-medium text-white backdrop-blur-sm">
+                    Experiencia 0{index + 1}
+                  </span>
+                </div>
+                <div className="p-6 md:p-7">
+                  <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-[#eaf3e0] text-[#278146]">
+                    <experience.icon size={21} strokeWidth={1.8} />
+                  </div>
+                  <h3 className="mb-3 text-xl font-semibold text-[#173a20]" style={{ fontFamily: "var(--font-display)" }}>
+                    {experience.title}
+                  </h3>
+                  <p className="leading-relaxed text-[#5b6259]">{experience.description}</p>
+                </div>
+              </article>
+            ))}
           </div>
         </div>
       </section>
@@ -989,15 +1092,14 @@ export default function App() {
           {/* 5 tarjetas horizontales con foto de fondo sutil */}
           <div className="grid md:grid-cols-5 gap-4">
             {[
-              { icon: Link2, title: "Enfoque integral", desc: "Asistencia técnica, gestión asociativa y sostenibilidad en un solo aliado.", photo: cultivoPlatano },
-              { icon: UsersRound, title: "Equipo interdisciplinario", desc: "Técnicos especializados para cada área de intervención.", photo: productoresAnserma },
-              { icon: BarChart3, title: "Ejecución trazable", desc: "Recursos públicos y privados con la trazabilidad que exigen los co-financiadores.", photo: equipoProcesos },
-              { icon: MapPinned, title: "Conocimiento local", desc: "Dominio de ICA, ADR, Agrosavia, CMDR y normativa nacional.", photo: trabajoCampoNuevo },
-              { icon: Search, title: "Diagnóstico In Situ", desc: "Ningún programa se diseña desde escritorio.", photo: viveroPlantula },
+              { icon: Link2, title: "Enfoque integral", desc: "Asistencia técnica, gestión asociativa y sostenibilidad en un solo aliado." },
+              { icon: UsersRound, title: "Equipo interdisciplinario", desc: "Técnicos especializados para cada área de intervención." },
+              { icon: BarChart3, title: "Ejecución trazable", desc: "Recursos públicos y privados con la trazabilidad que exigen los co-financiadores." },
+              { icon: MapPinned, title: "Conocimiento local", desc: "Dominio de ICA, ADR, Agrosavia, CMDR y normativa nacional." },
+              { icon: Search, title: "Diagnóstico In Situ", desc: "Ningún programa se diseña desde escritorio." },
             ].map((v, i) => (
-              <div key={i} data-aos="fade-up" data-aos-delay={i * 80} className="interactive-card relative rounded-2xl overflow-hidden shadow-md group" style={{ minHeight: 200 }}>
-                <img src={v.photo} alt="" aria-hidden className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0c3016]/90 via-[#0c3016]/50 to-[#0c3016]/20" />
+              <div key={i} data-aos="fade-up" data-aos-delay={i * 80} className="interactive-card relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-[#174c26] to-[#0c3016] shadow-md group" style={{ minHeight: 200 }}>
+                <div className="pointer-events-none absolute -right-8 -top-10 h-36 w-36 rounded-full bg-[#8dc56a]/10 blur-2xl transition-transform duration-500 group-hover:scale-150" />
                 <div className="relative p-4 flex flex-col justify-end h-full" style={{ minHeight: 200 }}>
                   <div className="mb-3 flex h-9 w-9 items-center justify-center rounded-full border border-white/30 bg-white/10 text-[#c5e6a5]"><v.icon size={18} strokeWidth={1.8} /></div>
                   <div className="text-[#8dc56a] font-bold text-sm mb-1" style={{ fontFamily: "var(--font-display)" }}>{v.title}</div>
@@ -1011,7 +1113,6 @@ export default function App() {
 
       {/* ──────── VINCULACIÓN ──────── */}
       <section id="vinculacion" className="relative overflow-hidden py-20" style={{ background: "linear-gradient(145deg, #0c3016 0%, #174c26 48%, #7a4e2d 150%)" }}>
-        <div className="pointer-events-none absolute inset-0 opacity-15" style={{ backgroundImage: `url(${viveroPlantula})`, backgroundPosition: "center", backgroundSize: "cover", mixBlendMode: "screen" }} />
         <div className="max-w-6xl mx-auto px-6">
           <div className="flex flex-col md:flex-row md:items-end gap-6 mb-12">
             <div className="flex-1">
@@ -1113,13 +1214,6 @@ export default function App() {
                 ))}
               </div>
 
-              {/* Foto pequeña del equipo */}
-              <div className="mt-8 rounded-2xl overflow-hidden shadow-lg" style={{ transform: "rotate(-1deg)" }}>
-                <img src={imgEquipo} alt="Equipo Germinagro" className="w-full h-36 object-cover object-top" />
-                <div className="bg-[#0c3016] px-4 py-2 text-white/70 text-xs italic">
-                  "Ningún programa se diseña desde un escritorio."
-                </div>
-              </div>
             </div>
 
             {/* Formulario */}
@@ -1169,27 +1263,6 @@ export default function App() {
         </div>
       </section>
 
-      {/* ──────── SEGURIDAD Y DATOS ──────── */}
-      <section id="politicas-datos" className="border-t border-[#d8dfd0] bg-[#eaf3e0] py-14">
-        <div className="mx-auto max-w-6xl px-6">
-          <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
-            <div className="max-w-2xl">
-              <div className="mb-2 text-xs font-semibold uppercase tracking-widest text-[#5a9e3a]">Protección y confianza</div>
-              <h2 className="text-3xl font-bold text-[#0c3016]" style={{ fontFamily: "var(--font-display)" }}>Políticas de seguridad de datos</h2>
-              <p className="mt-3 text-sm leading-relaxed text-[#536050]">Tratamos tus datos con finalidad clara, acceso restringido y controles técnicos. No guardamos contraseñas en este sitio ni almacenamos formularios personales en el navegador.</p>
-            </div>
-            <div className="flex flex-wrap gap-3 text-sm font-semibold">
-              <a href="/seguridad" className="rounded-full bg-[#1a5c28] px-4 py-2 text-white hover:bg-[#0f3a19]">Centro de seguridad</a>
-              <a href="/privacidad" className="rounded-full border border-[#8aaa76] px-4 py-2 text-[#1a5c28] hover:bg-white">Privacidad</a>
-              <a href="/terminos" className="rounded-full border border-[#8aaa76] px-4 py-2 text-[#1a5c28] hover:bg-white">Términos</a>
-            </div>
-          </div>
-          <div className="mt-8 grid gap-4 sm:grid-cols-3">
-            {[ ["Acceso restringido", "Supabase Auth y roles administrativos verificados."], ["Datos protegidos", "RLS, validación de entradas y consultas parametrizadas."], ["Tus derechos", "Puedes solicitar consulta, corrección o eliminación de tus datos." ] ].map(([title, description]) => <div key={title} className="rounded-2xl border border-[#c9daba] bg-white/70 p-4"><p className="font-bold text-[#1a5c28]">{title}</p><p className="mt-1 text-sm leading-relaxed text-[#64705f]">{description}</p></div>)}
-          </div>
-        </div>
-      </section>
-
       {/* ──────── FOOTER ──────── */}
       <footer className="bg-[#0a2410] border-t border-white/10 py-6">
         <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-3">
@@ -1204,10 +1277,8 @@ export default function App() {
           <div className="text-white/30 text-xs text-center">
             © 2026 Fundación Germinagro · Manizales, Caldas · Eje Cafetero, Tolima y Valle del Cauca
           </div>
-          <nav className="flex flex-wrap justify-center gap-x-4 gap-y-1 text-xs text-white/45" aria-label="Información legal">
-            <a href="/seguridad" className="hover:text-white">Seguridad</a>
-            <a href="/privacidad" className="hover:text-white">Privacidad</a>
-            <a href="/terminos" className="hover:text-white">Términos</a>
+          <nav className="flex flex-wrap justify-center gap-x-4 gap-y-1 text-xs text-white/35" aria-label="Información legal">
+            <a href="/privacidad" className="transition-colors hover:text-white/70">Política de privacidad</a>
           </nav>
         </div>
       </footer>
