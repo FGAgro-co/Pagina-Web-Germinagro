@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=Source+Sans+3:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500;1,9..144,600&family=Source+Sans+3:wght@400;500;600&display=swap');
 @import 'tailwindcss';
 
 @theme {
@@ -31,4 +31,97 @@ body {
   font-family: var(--font-body);
   background-color: #f5f2ec;
   color: #1a1a1a;
+}
+
+.hero-photo {
+  transform: scale(1.03);
+  animation: hero-photo-drift 42s ease-in-out infinite alternate;
+}
+
+.hero-title {
+  max-width: 13ch;
+  letter-spacing: -0.045em;
+  background-size: 220% 100%;
+  background-position: 0% 50%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  text-wrap: balance;
+  animation: hero-title-glow 14s ease-in-out infinite alternate;
+}
+
+.hero-atmosphere {
+  isolation: isolate;
+  background: linear-gradient(125deg, rgba(46, 125, 64, 0.05), rgba(212, 232, 194, 0.08), rgba(122, 78, 45, 0.06));
+  background-size: 220% 220%;
+  animation: hero-atmosphere-shift 24s ease-in-out infinite alternate;
+  mix-blend-mode: screen;
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.hero-orb {
+  position: absolute;
+  display: block;
+  width: clamp(18rem, 38vw, 38rem);
+  aspect-ratio: 1;
+  border-radius: 9999px;
+  filter: blur(clamp(4rem, 8vw, 7rem));
+  opacity: 0.34;
+  will-change: transform, opacity;
+}
+
+.hero-orb--canopy {
+  top: -22%;
+  left: -10%;
+  background: rgba(89, 174, 83, 0.72);
+  animation: hero-orb-drift 23s ease-in-out infinite alternate;
+}
+
+.hero-orb--sunrise {
+  top: 4%;
+  right: -12%;
+  background: rgba(202, 173, 103, 0.55);
+  animation: hero-orb-drift 30s ease-in-out -8s infinite alternate-reverse;
+}
+
+.hero-orb--leaf {
+  bottom: -48%;
+  left: 38%;
+  width: clamp(20rem, 42vw, 42rem);
+  background: rgba(33, 117, 58, 0.7);
+  animation: hero-orb-drift 27s ease-in-out -5s infinite alternate;
+}
+
+@keyframes hero-photo-drift {
+  from { transform: scale(1.03); }
+  to { transform: scale(1.1); }
+}
+
+@keyframes hero-title-glow {
+  from { background-position: 0% 50%; }
+  to { background-position: 100% 50%; }
+}
+
+@keyframes hero-atmosphere-shift {
+  from { background-position: 0% 50%; }
+  to { background-position: 100% 50%; }
+}
+
+@keyframes hero-orb-drift {
+  0% { transform: translate3d(-2%, -1%, 0) scale(0.94); opacity: 0.25; }
+  100% { transform: translate3d(8%, 7%, 0) scale(1.08); opacity: 0.42; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-photo,
+  .hero-title,
+  .hero-atmosphere,
+  .hero-orb {
+    animation: none;
+  }
+
+  .hero-photo {
+    transform: scale(1.03);
+  }
 }

@@ -49,6 +49,9 @@ import equipoProcesos from "./imports/equipo-procesos.jpeg";
 import productoresAnserma from "./imports/productores-anserma.jpeg";
 import trabajoCampoNuevo from "./imports/trabajo-campo-nuevo.jpeg";
 import viveroPlantula from "./imports/vivero-plantula-3.jpeg";
+import jornadaCampo1 from "./imports/jornada-campo-1.jpg";
+import jornadaCampo2 from "./imports/jornada-campo-2.jpg";
+import jornadaCampo3 from "./imports/jornada-campo-3.jpg";
 
 const LINES = [
   {
@@ -657,14 +660,19 @@ export default function App() {
       {/* ──────── HERO ──────── */}
       <section className="relative min-h-screen flex items-end pb-0 pt-14 overflow-hidden">
         {/* Foto de campo a sangre */}
-        <img src={SITE_IMAGES[siteConfig.heroImage as keyof typeof SITE_IMAGES]?.src || productoresAnserma} alt="Productores y equipo técnico en Anserma, Caldas" className="absolute inset-0 w-full h-full object-cover object-center" />
+        <img src={SITE_IMAGES[siteConfig.heroImage as keyof typeof SITE_IMAGES]?.src || productoresAnserma} alt="Productores y equipo técnico en Anserma, Caldas" className="hero-photo absolute inset-0 w-full h-full object-cover object-center" />
         {/* Gradiente dramático */}
         <div className="absolute inset-0" style={{
           background: "linear-gradient(to bottom, rgba(10,28,12,0.55) 0%, rgba(10,28,12,0.25) 40%, rgba(10,28,12,0.90) 80%, #0c3016 100%)"
         }} />
+        <div className="hero-atmosphere absolute inset-0 overflow-hidden" aria-hidden="true">
+          <span className="hero-orb hero-orb--canopy" />
+          <span className="hero-orb hero-orb--sunrise" />
+          <span className="hero-orb hero-orb--leaf" />
+        </div>
 
         {/* Foto flotante equipo — esquina superior derecha */}
-        <div className="absolute top-24 right-8 md:right-16 hidden md:block" style={{ transform: "rotate(2deg)" }}>
+        <div className="absolute top-24 right-8 md:right-16 hidden md:block z-10" style={{ transform: "rotate(2deg)" }}>
           <div className="w-48 rounded-2xl overflow-hidden shadow-2xl border-4 border-white/20">
             <img src={SITE_IMAGES[siteConfig.floatingImage as keyof typeof SITE_IMAGES]?.src || imgEquipo} alt="Equipo Germinagro en campo" className="w-full h-56 object-cover object-top" />
           </div>
@@ -672,14 +680,19 @@ export default function App() {
         </div>
 
         {/* Contenido */}
-        <div className="relative w-full max-w-6xl mx-auto px-6 pb-16">
+        <div className="relative z-10 w-full max-w-6xl mx-auto px-6 pb-16">
           <div className="max-w-2xl">
             <div className="inline-flex items-center gap-2 bg-[#5a9e3a]/25 border border-[#5a9e3a]/40 text-[#a8d880] text-xs font-semibold uppercase tracking-widest px-4 py-1.5 rounded-full mb-5">
               <span className="w-1.5 h-1.5 rounded-full bg-[#8dc56a] animate-pulse" />
               {siteConfig.heroEyebrow}
             </div>
-            <h1 style={{ fontFamily: "Fredoka One, var(--font-display)", lineHeight: 1.1, color: siteConfig.accentColor }}
-              className="text-6xl md:text-7xl font-bold text-white mb-5">
+            <h1
+              style={{
+                fontFamily: "var(--font-display)",
+                lineHeight: 1.04,
+                backgroundImage: `linear-gradient(105deg, #fff 4%, #e6f3d5 48%, ${siteConfig.accentColor} 100%)`,
+              }}
+              className="hero-title mb-5 text-5xl font-semibold md:text-7xl">
               {siteConfig.heroTitle}
             </h1>
             <p className="text-white/70 text-lg leading-relaxed mb-8 max-w-lg">
@@ -914,15 +927,15 @@ export default function App() {
             </div>
             {/* Arriba centro */}
             <div className="col-span-4 rounded-2xl overflow-hidden relative group">
-              <img src={cultivoPlatanoCosecha} alt="Cosecha de plátano en finca" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+              <img src={jornadaCampo1} alt="Equipo Germinagro durante una jornada de trabajo comunitario en el bosque" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-              <div className="absolute bottom-3 left-3 text-white text-xs font-semibold">Cosecha de plátano</div>
+              <div className="absolute bottom-3 left-3 text-white text-xs font-semibold">Jornada comunitaria</div>
             </div>
             {/* Arriba derecha */}
             <div className="col-span-3 rounded-2xl overflow-hidden relative group">
-              <img src={equipoProcesos} alt="Equipo Germinagro desarrollando procesos agropecuarios" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+              <img src={jornadaCampo2} alt="Equipo técnico construyendo una estructura rural de bambú" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-              <div className="absolute bottom-3 left-3 text-white text-xs font-semibold">Trabajo técnico</div>
+              <div className="absolute bottom-3 left-3 text-white text-xs font-semibold">Infraestructura rural</div>
             </div>
             {/* Abajo centro */}
             <div className="col-span-3 rounded-2xl overflow-hidden relative group">
@@ -932,9 +945,9 @@ export default function App() {
             </div>
             {/* Abajo derecha grande */}
             <div className="col-span-4 rounded-2xl overflow-hidden relative group">
-              <img src={trabajoCampoNuevo} alt="Trabajo de campo para infraestructura rural" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+              <img src={jornadaCampo3} alt="Productores y equipo técnico trabajando en una estructura de bambú" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/55 to-transparent" />
-              <div className="absolute bottom-3 left-3 text-white text-xs font-semibold">Infraestructura rural</div>
+              <div className="absolute bottom-3 left-3 text-white text-xs font-semibold">Aprendizaje en campo</div>
             </div>
           </div>
         </div>
