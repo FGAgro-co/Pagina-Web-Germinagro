@@ -42,10 +42,15 @@ import imgSemillas from "./imports/image-2.png";
 import imgMaiz from "./imports/image-3.png";
 import imgBolsas from "./imports/image-4.png";
 import imgStand from "./imports/image-5.png";
+import cultivoPlatano from "./imports/cultivo-platano.jpeg";
+import cultivoPlatanoCanastillas from "./imports/cultivo-platano-canastillas.jpeg";
 import cultivoPlatanoCosecha from "./imports/cultivo-platano-cosecha.jpeg";
 import equipoProcesos from "./imports/equipo-procesos.jpeg";
-import productoresAnserma from "./imports/productores-anserma.jpeg";
+import productoresAnserma from "./imports/productores-anserma-sin-gps.jpg";
 import viveroPlantula from "./imports/vivero-plantula-3.jpeg";
+import jornadaCampo1 from "./imports/jornada-campo-1.jpg";
+import jornadaCampo2 from "./imports/jornada-campo-2.jpg";
+import jornadaCampo3 from "./imports/jornada-campo-3.jpg";
 import comunidadTerritorio from "./imports/comunidad-territorio.jpg";
 import encuentroTerritorial from "./imports/encuentro-territorial.jpg";
 import reunionProductores from "./imports/reunion-productores.jpg";
@@ -716,7 +721,7 @@ export default function App() {
         }}
       >
         {/* Foto de campo a sangre */}
-        <img src={SITE_IMAGES[siteConfig.heroImage as keyof typeof SITE_IMAGES]?.src || productoresAnserma} alt={SITE_IMAGES[siteConfig.heroImage as keyof typeof SITE_IMAGES]?.label || "Productores y equipo técnico en campo"} className="hero-photo absolute inset-0 w-full h-full object-cover object-center" />
+        <img src={SITE_IMAGES[siteConfig.heroImage as keyof typeof SITE_IMAGES]?.src || productoresAnserma} alt={SITE_IMAGES[siteConfig.heroImage as keyof typeof SITE_IMAGES]?.label || "Productores y equipo técnico en campo"} style={{ objectPosition: siteConfig.heroImage === "productores" ? "50% 35%" : "50% 50%" }} className="hero-photo absolute inset-0 w-full h-full object-cover object-center" />
         {/* Gradiente dramático */}
         <div className="absolute inset-0" style={{
           background: "linear-gradient(to bottom, rgba(10,28,12,0.55) 0%, rgba(10,28,12,0.25) 40%, rgba(10,28,12,0.90) 80%, #0c3016 100%)"
@@ -846,21 +851,20 @@ export default function App() {
           </div>
 
           {/* Tabs */}
-          <div className="flex gap-2 overflow-x-auto pb-1" style={{ scrollbarWidth: "none" }}>
+          <div className="flex min-w-0 flex-wrap items-center gap-2 pb-1">
             {LINES.map((l, i) => (
               <button
                 key={i}
                 onClick={() => setActiveTab(i)}
-                className="flex-shrink-0 flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-semibold transition-all"
+                className="flex max-w-full flex-none items-center gap-2 rounded-full px-3 py-2.5 text-left text-sm font-semibold transition-all sm:px-4"
                 style={{
                   background: activeTab === i ? l.color : "transparent",
                   color: activeTab === i ? "#ffffff" : "#555",
                   border: activeTab === i ? `2px solid ${l.color}` : "2px solid #d4d4c8",
                 }}
               >
-                <l.icon size={17} strokeWidth={1.8} />
-                <span className="hidden sm:inline">{l.title}</span>
-                <span className="sm:hidden">{l.num}</span>
+                <l.icon className="shrink-0" size={17} strokeWidth={1.8} />
+                <span className="whitespace-nowrap">{l.title}</span>
               </button>
             ))}
           </div>
@@ -1100,18 +1104,54 @@ export default function App() {
           {/* 5 tarjetas horizontales con foto de fondo sutil */}
           <div className="grid md:grid-cols-5 gap-4">
             {[
-              { icon: Link2, title: "Enfoque integral", desc: "Asistencia técnica, gestión asociativa y sostenibilidad en un solo aliado." },
-              { icon: UsersRound, title: "Equipo interdisciplinario", desc: "Técnicos especializados para cada área de intervención." },
-              { icon: BarChart3, title: "Ejecución trazable", desc: "Recursos públicos y privados con la trazabilidad que exigen los co-financiadores." },
-              { icon: MapPinned, title: "Conocimiento local", desc: "Dominio de ICA, ADR, Agrosavia, CMDR y normativa nacional." },
-              { icon: Search, title: "Diagnóstico In Situ", desc: "Ningún programa se diseña desde escritorio." },
+              {
+                icon: Link2,
+                title: "Enfoque integral",
+                desc: "Asistencia técnica, gestión asociativa y sostenibilidad en un solo aliado.",
+                image: cultivoPlatanoCanastillas,
+                imageAlt: "Plátano cosechado y organizado en canastillas para su comercialización",
+              },
+              {
+                icon: UsersRound,
+                title: "Equipo interdisciplinario",
+                desc: "Técnicos especializados para cada área de intervención.",
+                image: jornadaCampo1,
+                imageAlt: "Equipo técnico colaborando en una jornada de trabajo rural",
+              },
+              {
+                icon: BarChart3,
+                title: "Ejecución trazable",
+                desc: "Recursos públicos y privados con la trazabilidad que exigen los co-financiadores.",
+                image: jornadaCampo3,
+                imageAlt: "Equipo Germinagro presentando proyectos estratégicos a la comunidad",
+              },
+              {
+                icon: MapPinned,
+                title: "Conocimiento local",
+                desc: "Dominio de ICA, ADR, Agrosavia, CMDR y normativa nacional.",
+                image: jornadaCampo2,
+                imageAlt: "Equipo de Germinagro en territorio junto a la comunidad",
+              },
+              {
+                icon: Search,
+                title: "Diagnóstico In Situ",
+                desc: "Ningún programa se diseña desde escritorio.",
+                image: cultivoPlatano,
+                imageAlt: "Cultivo de plátano observado directamente en una unidad productiva",
+              },
             ].map((v, i) => (
-              <div key={i} data-aos="fade-up" data-aos-delay={i * 80} className="interactive-card relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-[#174c26] to-[#0c3016] shadow-md group" style={{ minHeight: 200 }}>
-                <div className="pointer-events-none absolute -right-8 -top-10 h-36 w-36 rounded-full bg-[#8dc56a]/10 blur-2xl transition-transform duration-500 group-hover:scale-150" />
-                <div className="relative p-4 flex flex-col justify-end h-full" style={{ minHeight: 200 }}>
-                  <div className="mb-3 flex h-9 w-9 items-center justify-center rounded-full border border-white/30 bg-white/10 text-[#c5e6a5]"><v.icon size={18} strokeWidth={1.8} /></div>
-                  <div className="text-[#8dc56a] font-bold text-sm mb-1" style={{ fontFamily: "var(--font-display)" }}>{v.title}</div>
-                  <div className="text-white/70 text-xs leading-relaxed">{v.desc}</div>
+              <div key={v.title} data-aos="fade-up" data-aos-delay={i * 80} className="interactive-card group relative isolate overflow-hidden rounded-2xl border border-white/20 shadow-md" style={{ minHeight: 240 }}>
+                <img
+                  src={v.image}
+                  alt={v.imageAlt}
+                  loading="lazy"
+                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#09260f]/95 via-[#09260f]/65 to-[#09260f]/15" />
+                <div className="relative flex h-full min-h-[240px] flex-col justify-end p-4">
+                  <div className="mb-3 flex h-9 w-9 items-center justify-center rounded-full border border-white/40 bg-black/20 text-[#d4f0b7] backdrop-blur-sm"><v.icon size={18} strokeWidth={1.8} /></div>
+                  <div className="mb-1 text-sm font-bold text-[#c5e6a5]" style={{ fontFamily: "var(--font-display)" }}>{v.title}</div>
+                  <div className="text-xs leading-relaxed text-white/85">{v.desc}</div>
                 </div>
               </div>
             ))}
