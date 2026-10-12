@@ -93,6 +93,15 @@ body {
   animation: hero-orb-drift 27s ease-in-out -5s infinite alternate;
 }
 
+.interactive-card {
+  transition: translate 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.interactive-card:hover {
+  translate: 0 -5px;
+  box-shadow: 0 18px 36px rgba(12, 48, 22, 0.2);
+}
+
 @keyframes hero-photo-drift {
   from { transform: scale(1.03); }
   to { transform: scale(1.1); }
@@ -117,8 +126,15 @@ body {
   .hero-photo,
   .hero-title,
   .hero-atmosphere,
-  .hero-orb {
+  .hero-orb,
+  .interactive-card {
     animation: none;
+    transition: none;
+  }
+
+  .interactive-card:hover {
+    translate: none;
+    box-shadow: none;
   }
 
   .hero-photo {

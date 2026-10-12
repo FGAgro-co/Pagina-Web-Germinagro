@@ -53,6 +53,20 @@ import jornadaCampo1 from "./imports/jornada-campo-1.jpg";
 import jornadaCampo2 from "./imports/jornada-campo-2.jpg";
 import jornadaCampo3 from "./imports/jornada-campo-3.jpg";
 
+declare global {
+  interface Window {
+    AOS?: {
+      init: (options: {
+        duration: number;
+        easing: string;
+        once: boolean;
+        offset: number;
+        disable: boolean;
+      }) => void;
+    };
+  }
+}
+
 const LINES = [
   {
     num: "01",
@@ -559,6 +573,16 @@ export default function App() {
   const [contactSending, setContactSending] = useState(false);
 
   useEffect(() => {
+    window.AOS?.init({
+      duration: 650,
+      easing: "ease-out-cubic",
+      once: true,
+      offset: 70,
+      disable: window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+    });
+  }, []);
+
+  useEffect(() => {
     if (window.location.pathname.startsWith("/admin")) return;
     purgeLegacySensitiveStorage();
     const analytics = readAnalytics();
@@ -835,7 +859,7 @@ export default function App() {
 
         {/* Panel activo */}
         <div className="max-w-6xl mx-auto px-6 pb-20">
-          <div className="grid md:grid-cols-2 gap-6 rounded-3xl overflow-hidden shadow-xl" style={{ background: "#fff", minHeight: 360 }}>
+          <div className="interactive-card grid md:grid-cols-2 gap-6 rounded-3xl overflow-hidden shadow-xl" data-aos="fade-up" style={{ background: "#fff", minHeight: 360 }}>
             {/* Foto */}
             <div className="relative overflow-hidden" style={{ minHeight: 280 }}>
               <img
@@ -901,7 +925,7 @@ export default function App() {
       <section id="campo" className="relative overflow-hidden py-20" style={{ background: "linear-gradient(135deg, #0c3016 0%, #194d29 60%, #477b3b 100%)" }}>
         <div className="pointer-events-none absolute inset-0 opacity-15" style={{ backgroundImage: `url(${cultivoPlatanoCosecha})`, backgroundPosition: "center", backgroundSize: "cover", mixBlendMode: "screen" }} />
         <div className="max-w-6xl mx-auto px-6">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10" data-aos="fade-up">
             <div>
               <div className="text-[#8dc56a] text-xs font-semibold uppercase tracking-widest mb-2">Trabajo real en campo</div>
               <h2 className="text-3xl font-bold text-white" style={{ fontFamily: "var(--font-display)" }}>
@@ -917,7 +941,7 @@ export default function App() {
           {/* Collage asimétrico */}
           <div className="grid grid-cols-12 grid-rows-2 gap-3" style={{ height: 380 }}>
             {/* Grande izquierda */}
-            <div className="col-span-5 row-span-2 rounded-3xl overflow-hidden relative group">
+            <div className="col-span-5 row-span-2 rounded-3xl overflow-hidden relative group" data-aos="fade-up">
               <img src={SITE_IMAGES[siteConfig.fieldImage as keyof typeof SITE_IMAGES]?.src || productoresAnserma} alt="Productores y equipo técnico en Anserma, Caldas" className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
               <div className="absolute bottom-4 left-4">
@@ -926,25 +950,25 @@ export default function App() {
               </div>
             </div>
             {/* Arriba centro */}
-            <div className="col-span-4 rounded-2xl overflow-hidden relative group">
+            <div className="col-span-4 rounded-2xl overflow-hidden relative group" data-aos="fade-up" data-aos-delay="80">
               <img src={jornadaCampo1} alt="Equipo Germinagro durante una jornada de trabajo comunitario en el bosque" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
               <div className="absolute bottom-3 left-3 text-white text-xs font-semibold">Jornada comunitaria</div>
             </div>
             {/* Arriba derecha */}
-            <div className="col-span-3 rounded-2xl overflow-hidden relative group">
+            <div className="col-span-3 rounded-2xl overflow-hidden relative group" data-aos="fade-up" data-aos-delay="160">
               <img src={jornadaCampo2} alt="Equipo técnico construyendo una estructura rural de bambú" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
               <div className="absolute bottom-3 left-3 text-white text-xs font-semibold">Infraestructura rural</div>
             </div>
             {/* Abajo centro */}
-            <div className="col-span-3 rounded-2xl overflow-hidden relative group">
+            <div className="col-span-3 rounded-2xl overflow-hidden relative group" data-aos="fade-up" data-aos-delay="120">
               <img src={SITE_IMAGES[siteConfig.galleryImage as keyof typeof SITE_IMAGES]?.src || viveroPlantula} alt="Plántulas en vivero de Germinagro" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
               <div className="absolute bottom-3 left-3 text-white text-xs font-semibold">Viveros</div>
             </div>
             {/* Abajo derecha grande */}
-            <div className="col-span-4 rounded-2xl overflow-hidden relative group">
+            <div className="col-span-4 rounded-2xl overflow-hidden relative group" data-aos="fade-up" data-aos-delay="200">
               <img src={jornadaCampo3} alt="Productores y equipo técnico trabajando en una estructura de bambú" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/55 to-transparent" />
               <div className="absolute bottom-3 left-3 text-white text-xs font-semibold">Aprendizaje en campo</div>
@@ -971,7 +995,7 @@ export default function App() {
               { icon: MapPinned, title: "Conocimiento local", desc: "Dominio de ICA, ADR, Agrosavia, CMDR y normativa nacional.", photo: trabajoCampoNuevo },
               { icon: Search, title: "Diagnóstico In Situ", desc: "Ningún programa se diseña desde escritorio.", photo: viveroPlantula },
             ].map((v, i) => (
-              <div key={i} className="relative rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all hover:-translate-y-1 group" style={{ minHeight: 200 }}>
+              <div key={i} data-aos="fade-up" data-aos-delay={i * 80} className="interactive-card relative rounded-2xl overflow-hidden shadow-md group" style={{ minHeight: 200 }}>
                 <img src={v.photo} alt="" aria-hidden className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0c3016]/90 via-[#0c3016]/50 to-[#0c3016]/20" />
                 <div className="relative p-4 flex flex-col justify-end h-full" style={{ minHeight: 200 }}>
@@ -1004,9 +1028,10 @@ export default function App() {
 
           {/* Tarjetas compactas en scroll horizontal en móvil, grid en desktop */}
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            {VINCULACION.map((v) => (
+            {VINCULACION.map((v, i) => (
               <a key={v.title} href="#contacto" onClick={() => { const current = readAnalytics(); const profileClicks = { ...current.profileClicks, [v.title]: (current.profileClicks[v.title] || 0) + 1 }; recordEvent(`Interés: ${v.title}`, { profileClicks }); }}
-                className="group relative rounded-2xl p-5 border border-white/10 hover:border-white/30 transition-all hover:-translate-y-1 cursor-pointer"
+                data-aos="fade-up" data-aos-delay={i * 70}
+                className="interactive-card group relative rounded-2xl p-5 border border-white/10 hover:border-white/30 cursor-pointer"
                 style={{ background: "rgba(255,255,255,0.05)" }}
               >
                 <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-[#c5e6a5]"><v.icon size={21} strokeWidth={1.8} /></div>
