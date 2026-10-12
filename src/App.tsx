@@ -47,7 +47,6 @@ import equipoProcesos from "./imports/equipo-procesos.jpeg";
 import productoresAnserma from "./imports/productores-anserma.jpeg";
 import viveroPlantula from "./imports/vivero-plantula-3.jpeg";
 import comunidadTerritorio from "./imports/comunidad-territorio.jpg";
-import bioinsumosComunidad from "./imports/bioinsumos-comunidad.jpg";
 import encuentroTerritorial from "./imports/encuentro-territorial.jpg";
 import reunionProductores from "./imports/reunion-productores.jpg";
 import diagnosticoCultivoPlatano from "./imports/diagnostico-cultivo-platano.jpg";
@@ -56,6 +55,9 @@ import monitoreoAgroecologico from "./imports/monitoreo-agroecologico.jpg";
 import poscosechaPlatano from "./imports/poscosecha-platano.jpg";
 import biofabricaTanques from "./imports/biofabrica-tanques.jpg";
 import preparacionBioinsumos from "./imports/preparacion-bioinsumos.jpg";
+import viveroEstructura from "./imports/vivero-estructura.jpg";
+import limonCosecha from "./imports/limon-cosecha.jpg";
+import limonCultivo from "./imports/limon-cultivo.jpg";
 
 declare global {
   interface Window {
@@ -999,6 +1001,10 @@ export default function App() {
                 icon: Sprout,
                 images: [
                   {
+                    src: viveroEstructura,
+                    alt: "Estructura de vivero comunitario construida con malla de sombra",
+                  },
+                  {
                     src: viveroComunitario,
                     alt: "Plántulas nativas creciendo bajo malla sombra en un vivero comunitario",
                   },
@@ -1018,8 +1024,12 @@ export default function App() {
                     alt: "Preparación y pesaje de materiales para elaborar bioinsumos",
                   },
                   {
-                    src: bioinsumosComunidad,
-                    alt: "Jornada formativa comunitaria sobre producción y uso de bioinsumos",
+                    src: limonCosecha,
+                    alt: "Limones orgánicos recién cosechados junto a hojas de la planta",
+                  },
+                  {
+                    src: limonCultivo,
+                    alt: "Árbol de limón orgánico con frutos en desarrollo",
                   },
                 ],
                 title: "Producción de limón orgánico y biofábricas",
@@ -1048,15 +1058,13 @@ export default function App() {
                 className="experience-card interactive-card group relative overflow-hidden rounded-2xl border border-[#e7ece5] bg-white shadow-md"
               >
                 <div className="experience-image relative h-56 overflow-hidden">
-                  <div className={`grid h-full ${experience.images.length === 1 ? "grid-cols-1" : "grid-cols-2"} ${experience.images.length === 3 ? "grid-rows-2" : ""} gap-1`}>
-                    {experience.images.map((image, imageIndex) => (
+                  <div className={`grid h-full ${experience.images.length === 1 ? "grid-cols-1" : "grid-cols-2"} ${experience.images.length > 2 ? "grid-rows-2" : ""} gap-1`}>
+                    {experience.images.map((image) => (
                       <img
                         key={image.src}
                         src={image.src}
                         alt={image.alt}
-                        className={`h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03] ${
-                          experience.images.length === 3 && imageIndex === 0 ? "row-span-2" : ""
-                        }`}
+                        className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
                       />
                     ))}
                   </div>
